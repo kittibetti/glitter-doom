@@ -64,7 +64,7 @@ function reveal(r, c, div) {
   if (cell.bomb) {
     div.classList.add("bomb");
     const img = document.createElement("img");
-    img.src = "assets/hello_kitty.png";
+    img.src = "hello_kitty.png";
     div.appendChild(img);
     revealAllBombs();
     document.getElementById("looser").classList.remove("hidden");
@@ -104,7 +104,7 @@ function revealAllBombs() {
         const el = cell.element;
         el.classList.add("revealed", "bomb");
         const img = document.createElement("img");
-        img.src = "assets/hello_kitty.png";
+        img.src = "hello_kitty.png";
         el.appendChild(img);
       }
     }
