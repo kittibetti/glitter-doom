@@ -128,6 +128,7 @@ function reveal(r, c) {
 function showLooser() {
   const looser = document.createElement("div");
   looser.innerText = "LOOSER";
+  looser.classList.add("overlay-message"); // ← EZ A FONTOS!
   looser.style.position = "fixed";
   looser.style.top = "50%";
   looser.style.left = "50%";
@@ -142,8 +143,10 @@ function showLooser() {
 
 function showVictoryMessage() {
   const victory = document.createElement("div");
+  victory.classList.add("overlay-message"); // ← EZ IS FONTOS!
   victory.innerHTML = `
-    <div style="
+    <div style="..."> ...
+  `;
       position: fixed;
       top: 50%;
       left: 50%;
@@ -171,6 +174,9 @@ function showVictoryMessage() {
 }
 
 function restartGame() {
+  // Töröljük a győzelem / looser feliratokat, ha voltak
+  document.querySelectorAll(".overlay-message").forEach(el => el.remove());
+
   const difficulty = document.getElementById("difficulty").value;
   setDifficulty(difficulty);
   createBoard();
