@@ -150,19 +150,38 @@ function revealAll() {
 }
 
 function showLooser() {
-  const looser = document.createElement("div");
-  looser.innerText = "LOOSER";
-  looser.classList.add("overlay-message");
-  looser.style.position = "fixed";
-  looser.style.top = "50%";
-  looser.style.left = "50%";
-  looser.style.transform = "translate(-50%, -50%)";
-  looser.style.fontSize = "4rem";
-  looser.style.color = "#f00";
-  looser.style.fontFamily = "'Press Start 2P', cursive";
-  looser.style.textShadow = "2px 2px 5px black";
-  looser.style.zIndex = 1000;
-  document.body.appendChild(looser);
+  const container = document.createElement("div");
+  container.classList.add("overlay-message");
+  container.style.position = "fixed";
+  container.style.top = "50%";
+  container.style.left = "50%";
+  container.style.transform = "translate(-50%, -50%)";
+  container.style.textAlign = "center";
+  container.style.zIndex = "1000";
+
+  const title = document.createElement("div");
+  title.innerText = "LOOSER";
+  title.style.fontSize = "4rem";
+  title.style.color = "#ff00ff";
+  title.style.fontFamily = "'Press Start 2P', cursive";
+  title.style.textShadow = "2px 2px 5px #000";
+  title.style.marginBottom = "20px";
+
+  const subtitle = document.createElement("div");
+  subtitle.innerHTML = `
+    <div style="font-size: 1rem; color: white; text-shadow: 1px 1px 2px black;">
+      You scared the kitty!<br>
+      <span style="font-size: 0.8rem; display: block; margin-top: 8px;">
+        Digitally remastered in 8-bit terror – csak erős idegzetű cuki lányoknak™
+      </span>
+    </div>
+  `;
+
+  container.appendChild(title);
+  container.appendChild(subtitle);
+  document.body.appendChild(container);
+}
+
 }
 
 function showVictoryMessage() {
