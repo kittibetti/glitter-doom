@@ -1,0 +1,16 @@
+
+{
+  "name": "Glitter Doom: Kitty’s Revenge™",
+  "short_name": "Kitty’s Doom",
+  "start_url": "index.html",
+  "display": "standalone",
+  "background_color": "#000000",
+  "theme_color": "#ff69b4",
+  "icons": [
+    {
+      "src": "assets/icon.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    }
+  ]
+}
