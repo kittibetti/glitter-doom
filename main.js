@@ -1,4 +1,4 @@
-// main.js – Teljesen újraépített, stabil verzió Kitty-győzelemmel és Looser szöveggel
+// main.js – Frissítve: glitter hullás Looser után + 10x10 játékban 20 akna
 
 let rows = 10;
 let cols = 10;
@@ -15,7 +15,7 @@ function setDifficulty(difficulty) {
     mines = 10;
   } else if (difficulty === 'medium') {
     rows = cols = 10;
-    mines = 15;
+    mines = 20; // ← Frissítve 15 helyett 20
   } else if (difficulty === 'hard') {
     rows = cols = 12;
     mines = 25;
@@ -152,36 +152,60 @@ function revealAll() {
 }
 
 function showLooser() {
-  const container = document.createElement("div");
-  container.classList.add("overlay-message");
-  container.style.position = "fixed";
-  container.style.top = "50%";
-  container.style.left = "50%";
-  container.style.transform = "translate(-50%, -50%)";
-  container.style.textAlign = "center";
-  container.style.zIndex = "1000";
-
-  const title = document.createElement("div");
-  title.innerText = "LOOSER";
-  title.style.fontSize = "4rem";
-  title.style.color = "#ff00ff";
-  title.style.fontFamily = "'Press Start 2P', cursive";
-  title.style.textShadow = "2px 2px 5px #000";
-  title.style.marginBottom = "20px";
-
   const subtitle = document.createElement("div");
+  subtitle.classList.add("overlay-message");
   subtitle.innerHTML = `
-    <div style="font-size: 1rem; color: white; text-shadow: 1px 1px 2px black;">
-      You scared the kitty!<br>
-      <span style="font-size: 0.8rem; display: block; margin-top: 8px;">
-        Digitally remastered in 8-bit terror – csak erős idegzetű cuki lányoknak™
-      </span>
+    <div style="
+      position: fixed;
+      top: calc(100% - 60px);
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 1rem;
+      color: white;
+      background: rgba(0,0,0,0.6);
+      padding: 10px 20px;
+      border-radius: 12px;
+      text-shadow: 1px 1px 2px black;
+      z-index: 1000;
+    ">
+      🐾 You scared the kitty!
     </div>
   `;
+  document.body.appendChild(subtitle);
 
-  container.appendChild(title);
-  container.appendChild(subtitle);
-  document.body.appendChild(container);
+  const looser = document.createElement("div");
+  looser.innerText = "LOOSER";
+  looser.classList.add("overlay-message");
+  looser.style.position = "fixed";
+  looser.style.top = "50%";
+  looser.style.left = "50%";
+  looser.style.transform = "translate(-50%, -50%)";
+  looser.style.fontSize = "4rem";
+  looser.style.color = "#ff00ff";
+  looser.style.fontFamily = "'Press Start 2P', cursive";
+  looser.style.textShadow = "2px 2px 5px #000";
+  looser.style.zIndex = 1000;
+  document.body.appendChild(looser);
+
+  startGlitter(); // ← glitter hullás indítása
+}
+
+function startGlitter() {
+  for (let i = 0; i < 100; i++) {
+    const glitter = document.createElement("div");
+    glitter.style.position = "fixed";
+    glitter.style.top = "-10px";
+    glitter.style.left = Math.random() * 100 + "%";
+    glitter.style.width = "6px";
+    glitter.style.height = "6px";
+    glitter.style.borderRadius = "50%";
+    glitter.style.background = `hsl(${Math.random() * 360}, 100%, 70%)`;
+    glitter.style.zIndex = 999;
+    glitter.style.opacity = 0.8;
+    glitter.style.pointerEvents = "none";
+    glitter.style.animation = `fall ${2 + Math.random() * 2}s linear forwards`;
+    document.body.appendChild(glitter);
+  }
 }
 
 function showVictoryMessage() {
@@ -217,6 +241,7 @@ function showVictoryMessage() {
 
 function restartGame() {
   document.querySelectorAll(".overlay-message").forEach(el => el.remove());
+  document.querySelectorAll("div[style*='fall']").forEach(el => el.remove()); // glitter törlése
   const difficulty = document.getElementById("difficulty").value;
   setDifficulty(difficulty);
   createBoard();
