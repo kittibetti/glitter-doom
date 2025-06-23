@@ -12,8 +12,8 @@ function restartGame() {
 
   const difficulty = document.getElementById("difficulty").value;
   if (difficulty === 'easy') { rows = cols = 8; mines = 10; }
-  else if (difficulty === 'medium') { rows = cols = 12; mines = 20; }
-  else if (difficulty === 'hard') { rows = cols = 16; mines = 40; }
+  else if (difficulty === 'medium') { rows = cols = 10; mines = 15; }
+  else if (difficulty === 'hard') { rows = cols = 12; mines = 25; }
   else { rows = cols = 20; mines = 50; }
 
   boardElem.style.gridTemplateColumns = `repeat(${cols}, 30px)`;
