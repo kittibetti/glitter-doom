@@ -1,4 +1,4 @@
-// main.js – Működő változat, győzelmi és Looser feliratokkal, hanggal, játéktér megjelenítéssel
+// main.js – Teljes, frissített verzió minden funkcióval
 
 let rows = 10;
 let cols = 10;
@@ -99,6 +99,7 @@ function reveal(r, c) {
     scream.play();
 
     gameOver = true;
+    revealAll();
     showLooser();
     return;
   }
@@ -122,6 +123,29 @@ function reveal(r, c) {
   if (revealedCount === rows * cols - mines) {
     gameOver = true;
     showVictoryMessage();
+  }
+}
+
+function revealAll() {
+  for (let r = 0; r < rows; r++) {
+    for (let c = 0; c < cols; c++) {
+      const cell = board[r][c];
+      if (!cell.revealed) {
+        cell.revealed = true;
+        cell.element.classList.add("revealed");
+
+        if (cell.mine) {
+          const img = document.createElement("img");
+          img.src = "hello_kitty.png";
+          img.alt = "Kitty";
+          img.style.width = "100%";
+          img.style.height = "100%";
+          cell.element.appendChild(img);
+        } else if (cell.adjacent > 0) {
+          cell.element.textContent = cell.adjacent;
+        }
+      }
+    }
   }
 }
 
@@ -173,9 +197,7 @@ function showVictoryMessage() {
 }
 
 function restartGame() {
-  // Töröljük a győzelem / looser feliratokat, ha voltak
   document.querySelectorAll(".overlay-message").forEach(el => el.remove());
-
   const difficulty = document.getElementById("difficulty").value;
   setDifficulty(difficulty);
   createBoard();
