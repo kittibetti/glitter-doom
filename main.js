@@ -1,4 +1,4 @@
-// main.js – Teljes, frissített verzió minden funkcióval
+// main.js – Teljesen újraépített, stabil verzió Kitty-győzelemmel és Looser szöveggel
 
 let rows = 10;
 let cols = 10;
@@ -108,6 +108,7 @@ function reveal(r, c) {
 
   if (cell.adjacent > 0) {
     cell.element.textContent = cell.adjacent;
+    cell.element.classList.add(`number-${cell.adjacent}`);
   } else {
     for (let dr = -1; dr <= 1; dr++) {
       for (let dc = -1; dc <= 1; dc++) {
@@ -143,6 +144,7 @@ function revealAll() {
           cell.element.appendChild(img);
         } else if (cell.adjacent > 0) {
           cell.element.textContent = cell.adjacent;
+          cell.element.classList.add(`number-${cell.adjacent}`);
         }
       }
     }
@@ -180,8 +182,6 @@ function showLooser() {
   container.appendChild(title);
   container.appendChild(subtitle);
   document.body.appendChild(container);
-}
-
 }
 
 function showVictoryMessage() {
