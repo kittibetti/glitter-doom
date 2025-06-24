@@ -2,7 +2,7 @@
 
 let rows = 10;
 let cols = 10;
-let mines = 15;
+let mines = 20;
 let board = [];
 let revealedCount = 0;
 let gameOver = false;
