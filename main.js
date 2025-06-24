@@ -15,20 +15,17 @@ const glitchInput = document.getElementById("glitch-input");
 const screamSound = new Audio("scream.mp3");
 const winSound = new Audio("congratulations.mp3");
 
+const difficultyLevels = {
+  easy: { size: 8, mines: 10 },
+  medium: { size: 10, mines: 20 },
+  hard: { size: 12, mines: 25 },
+  extreme: { size: 20, mines: 50 },
+};
+
 function setDifficulty(level) {
-  if (level === "easy") {
-    rows = cols = 8;
-    mineCount = 10;
-  } else if (level === "medium") {
-    rows = cols = 10;
-    mineCount = 20; // javítva 15-ről 20-ra
-  } else if (level === "hard") {
-    rows = cols = 12;
-    mineCount = 25;
-  } else {
-    rows = cols = 20;
-    mineCount = 50;
-  }
+  const config = difficultyLevels[level] || difficultyLevels.easy;
+  rows = cols = config.size;
+  mineCount = config.mines;
   boardElement.style.gridTemplateColumns = `repeat(${cols}, 30px)`;
 }
 
@@ -164,7 +161,9 @@ function renderBoard() {
     for (let c = 0; c < cols; c++) {
       let div = document.createElement("div");
       div.classList.add("cell");
-      div.addEventListener("click", () => reveal(r, c));
+      div.addEventListener("click", () => {
+        if (!gameOver) reveal(r, c);
+      });
       boardElement.appendChild(div);
       board[r][c].element = div;
     }
@@ -172,6 +171,7 @@ function renderBoard() {
 }
 
 function startGame() {
+  setDifficulty(difficultySelect.value);
   messageContainer.innerHTML = "";
   glitchMode = glitchInput.value.trim().toLowerCase() === "glitchkitti";
   if (glitchMode) {
@@ -179,7 +179,6 @@ function startGame() {
   } else {
     document.body.classList.remove("glitch");
   }
-  setDifficulty(difficultySelect.value);
   createBoard();
   renderBoard();
 }
