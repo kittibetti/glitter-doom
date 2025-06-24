@@ -1,31 +1,176 @@
+<!-- Glitter Doom: Kitty’s Revenge™ - új frissítés kezdete -->
 <!DOCTYPE html>
 <html lang="hu">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="theme-color" content="#ff69b4" />
-  <link rel="manifest" href="manifest.json" />
-  <link rel="icon" href="icon.png" />
   <title>🎬 Glitter Doom: Kitty’s Revenge™</title>
-  <link rel="stylesheet" href="style.css" />
+  <link rel="icon" href="icons/kitty-icon.png" type="image/png">
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(135deg, #ffccf9, #b6f2ff, #fcd6ff);
+      font-family: 'Comic Sans MS', cursive, sans-serif;
+      overflow: hidden;
+    }
+    .menu {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      text-align: center;
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(10px);
+      animation: fadeIn 2s ease;
+    }
+    .title {
+      font-size: 3rem;
+      color: #ff007f;
+      text-shadow: 0 0 5px #fff, 0 0 10px #ff00ff, 0 0 20px #ff00ff;
+      margin-bottom: 2rem;
+    }
+    .glitch {
+      position: relative;
+    }
+    .glitch::before, .glitch::after {
+      content: attr(class);
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      overflow: hidden;
+      color: #fff;
+      z-index: -1;
+    }
+    .glitch::before {
+      left: 2px;
+      text-shadow: -2px 0 red;
+      animation: glitchLeft 1s infinite linear alternate-reverse;
+    }
+    .glitch::after {
+      left: -2px;
+      text-shadow: -2px 0 cyan;
+      animation: glitchRight 1s infinite linear alternate-reverse;
+    }
+    @keyframes glitchLeft {
+      0% { clip-path: inset(0 0 10% 0); }
+      50% { clip-path: inset(20% 0 40% 0); }
+      100% { clip-path: inset(10% 0 0 0); }
+    }
+    @keyframes glitchRight {
+      0% { clip-path: inset(10% 0 0 0); }
+      50% { clip-path: inset(0 0 30% 0); }
+      100% { clip-path: inset(5% 0 15% 0); }
+    }
+    button {
+      background: #ff69b4;
+      border: none;
+      border-radius: 12px;
+      padding: 1rem 2rem;
+      margin: 0.5rem;
+      font-size: 1.2rem;
+      color: white;
+      cursor: pointer;
+      box-shadow: 0 0 10px #ff69b4, 0 0 20px #ff1493;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    button:hover {
+      transform: scale(1.1);
+      box-shadow: 0 0 20px #ff1493, 0 0 40px #ff1493;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    /* --- Játéktábla --- */
+    #game-board {
+      display: grid;
+      gap: 2px;
+      justify-content: center;
+      padding: 20px;
+      background: rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(6px);
+    }
+    .cell {
+      width: 40px;
+      height: 40px;
+      background-color: #fff0fa;
+      border-radius: 8px;
+      box-shadow: inset 0 0 4px #ffbde6;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      font-weight: bold;
+      color: #ff1493;
+      cursor: pointer;
+      user-select: none;
+      transition: background-color 0.2s, transform 0.1s;
+    }
+    .cell.revealed {
+      background-color: #ffe0f4;
+      transform: scale(0.98);
+    }
+    .cell.bomb {
+      background-image: url('images/kitty-bomb.png');
+      background-size: cover;
+      background-position: center;
+    }
+
+    /* --- LOOSER horror felirat --- */
+    #result-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background-color: rgba(0, 0, 0, 0.9);
+      color: #ff004c;
+      font-size: 6vw;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-shadow: 0 0 5px #ff004c, 0 0 10px #ff0000, 0 0 20px #ff0000;
+      z-index: 1000;
+      animation: looserIn 0.8s ease-out forwards;
+      font-family: 'Impact', sans-serif;
+    }
+    @keyframes looserIn {
+      0% {
+        opacity: 0;
+        transform: scale(0.5) rotate(0deg);
+        filter: blur(10px);
+      }
+      70% {
+        transform: scale(1.2) rotate(3deg);
+      }
+      100% {
+        opacity: 1;
+        transform: scale(1) rotate(0deg);
+        filter: blur(0);
+      }
+    }
+    .hidden {
+      display: none;
+    }
+  </style>
 </head>
 <body>
-  <h1>🎬 Glitter Doom: Kitty’s Revenge™</h1>
-  <div id="menu">
-    <label for="difficulty">Nehézségi szint:</label>
-    <select id="difficulty">
-      <option value="easy">Könnyű (8x8, 10 akna)</option>
-      <option value="medium">Közepes (10x10, 20 akna)</option>
-      <option value="hard">Nehéz (12x12, 25 akna)</option>
-      <option value="extreme">Extra (20x20, 50 akna)</option>
-    </select>
-    <input type="text" id="glitch-input" placeholder="Titkos kód..." />
-    <button id="start-button">ENTER TO DOOM</button>
+  <div id="main-menu" class="menu active">
+    <h1 class="title glitch">🎬 Glitter Doom: Kitty’s Revenge™</h1>
+    <button onclick="startGame('easy')">💖 Könnyű</button>
+    <button onclick="startGame('medium')">💀 Közepes</button>
+    <button onclick="startGame('hard')">🔥 Pokol</button>
+    <button onclick="activateGlitchKitti()">👑 glitchkitti mód</button>
   </div>
 
-  <div id="message-container"></div>
-  <div id="board"></div>
-
+  <div id="game-board" class="hidden"></div>
+  <div id="result-overlay" class="hidden">💀 LOOSER 💀</div>
   <script src="main.js"></script>
 </body>
 </html>
