@@ -1,190 +1,137 @@
-// main.js – Glitter Doom: Kitty’s Revenge™ Deluxe
-
-let rows = 0;
-let cols = 0;
-let mineCount = 0;
 let board = [];
+let rows = 8;
+let cols = 8;
+let bombs = 10;
 let gameOver = false;
-let glitchMode = false;
+let revealedCount = 0;
 
-const boardElement = document.getElementById("board");
-const difficultySelect = document.getElementById("difficulty");
-const startButton = document.getElementById("start-button");
-const messageContainer = document.getElementById("message-container");
-const glitchInput = document.getElementById("glitch-input");
-const screamSound = new Audio("scream.mp3");
-const winSound = new Audio("congratulations.mp3");
-
-const difficultyLevels = {
-  easy: { size: 8, mines: 10 },
-  medium: { size: 10, mines: 20 },
-  hard: { size: 12, mines: 25 },
-  extreme: { size: 20, mines: 50 },
-};
-
-function setDifficulty(level) {
-  const config = difficultyLevels[level] || difficultyLevels.easy;
-  rows = cols = config.size;
-  mineCount = config.mines;
-  boardElement.style.gridTemplateColumns = `repeat(${cols}, 30px)`;
-}
-
-function createBoard() {
-  board = [];
+function startGame(difficulty) {
+  document.getElementById('main-menu').classList.add('hidden');
+  document.getElementById('game-board').classList.remove('hidden');
+  document.getElementById('result-overlay').classList.add('hidden');
   gameOver = false;
-  for (let r = 0; r < rows; r++) {
-    board[r] = [];
-    for (let c = 0; c < cols; c++) {
-      board[r][c] = {
-        revealed: false,
-        mine: false,
-        adjacent: 0,
-        element: null
-      };
-    }
+  revealedCount = 0;
+
+  switch (difficulty) {
+    case 'easy': rows = cols = 8; bombs = 10; break;
+    case 'medium': rows = cols = 12; bombs = 20; break;
+    case 'hard': rows = cols = 16; bombs = 40; break;
   }
 
+  generateBoard();
+}
+
+function generateBoard() {
+  board = [];
+  const boardEl = document.getElementById('game-board');
+  boardEl.innerHTML = '';
+  boardEl.style.gridTemplateColumns = `repeat(${cols}, 1fr)`;
+
+  for (let r = 0; r < rows; r++) {
+    const row = [];
+    for (let c = 0; c < cols; c++) {
+      const cell = {
+        revealed: false,
+        bomb: false,
+        element: document.createElement('div')
+      };
+      cell.element.classList.add('cell');
+      cell.element.addEventListener('click', () => revealCell(r, c));
+      boardEl.appendChild(cell.element);
+      row.push(cell);
+    }
+    board.push(row);
+  }
+  placeBombs();
+}
+
+function placeBombs() {
   let placed = 0;
-  while (placed < mineCount) {
-    let r = Math.floor(Math.random() * rows);
-    let c = Math.floor(Math.random() * cols);
-    if (!board[r][c].mine) {
-      board[r][c].mine = true;
+  while (placed < bombs) {
+    const r = Math.floor(Math.random() * rows);
+    const c = Math.floor(Math.random() * cols);
+    if (!board[r][c].bomb) {
+      board[r][c].bomb = true;
       placed++;
     }
   }
+}
 
-  for (let r = 0; r < rows; r++) {
-    for (let c = 0; c < cols; c++) {
-      if (!board[r][c].mine) {
-        let count = 0;
-        for (let i = -1; i <= 1; i++) {
-          for (let j = -1; j <= 1; j++) {
-            let nr = r + i;
-            let nc = c + j;
-            if (
-              nr >= 0 && nr < rows &&
-              nc >= 0 && nc < cols &&
-              board[nr][nc].mine
-            ) {
-              count++;
-            }
+function revealCell(r, c) {
+  if (gameOver || board[r][c].revealed) return;
+  const cell = board[r][c];
+  cell.revealed = true;
+  revealedCount++;
+  cell.element.classList.add('revealed');
+
+  if (cell.bomb) {
+    cell.element.classList.add('bomb');
+    endGame(false);
+  } else {
+    const count = countAdjacentBombs(r, c);
+    if (count > 0) {
+      cell.element.textContent = count;
+    } else {
+      for (let dr = -1; dr <= 1; dr++) {
+        for (let dc = -1; dc <= 1; dc++) {
+          const nr = r + dr, nc = c + dc;
+          if (nr >= 0 && nr < rows && nc >= 0 && nc < cols && !(dr === 0 && dc === 0)) {
+            revealCell(nr, nc);
           }
         }
-        board[r][c].adjacent = count;
       }
     }
+    checkWin();
   }
 }
 
-function reveal(r, c) {
-  if (gameOver) return;
-  const cell = board[r][c];
-  if (cell.revealed) return;
-  cell.revealed = true;
-  cell.element.classList.add("revealed");
-
-  if (cell.mine) {
-    cell.element.classList.add("mine");
-    cell.element.innerHTML = '<img src="hello_kitty.png" alt="Hello Kitty">';
-    showLooser();
-    revealAll();
-    return;
+function countAdjacentBombs(r, c) {
+  let count = 0;
+  for (let dr = -1; dr <= 1; dr++) {
+    for (let dc = -1; dc <= 1; dc++) {
+      const nr = r + dr, nc = c + dc;
+      if (nr >= 0 && nr < rows && nc >= 0 && nc < cols) {
+        if (board[nr][nc].bomb) count++;
+      }
+    }
   }
+  return count;
+}
 
-  if (cell.adjacent > 0) {
-    cell.element.innerText = cell.adjacent;
+function endGame(won) {
+  gameOver = true;
+  const overlay = document.getElementById('result-overlay');
+  overlay.classList.remove('hidden');
+  if (won) {
+    overlay.textContent = '💅 WINNER 💅';
+    overlay.style.color = '#00ffcc';
+    overlay.style.textShadow = '0 0 10px #00fff2, 0 0 20px #00fff2, 0 0 30px #00fff2';
+    const winAudio = new Audio('sounds/victory.mp3');
+    winAudio.play();
   } else {
-    for (let i = -1; i <= 1; i++) {
-      for (let j = -1; j <= 1; j++) {
-        let nr = r + i;
-        let nc = c + j;
-        if (nr >= 0 && nr < rows && nc >= 0 && nc < cols) {
-          reveal(nr, nc);
-        }
-      }
-    }
+    overlay.textContent = '💀 LOOSER 💀';
+    overlay.style.color = '#ff004c';
+    overlay.style.textShadow = '0 0 5px #ff004c, 0 0 10px #ff0000, 0 0 20px #ff0000';
+    const loseAudio = new Audio('sounds/horror.mp3');
+    loseAudio.play();
   }
 
-  checkWin();
-}
-
-function revealAll() {
   for (let r = 0; r < rows; r++) {
     for (let c = 0; c < cols; c++) {
-      const cell = board[r][c];
-      if (!cell.revealed) {
-        cell.revealed = true;
-        cell.element.classList.add("revealed");
-        if (cell.mine) {
-          cell.element.classList.add("mine");
-          cell.element.innerHTML = '<img src="hello_kitty.png" alt="Hello Kitty">';
-        } else if (cell.adjacent > 0) {
-          cell.element.innerText = cell.adjacent;
-        }
+      if (board[r][c].bomb) {
+        board[r][c].element.classList.add('bomb');
       }
     }
   }
 }
 
 function checkWin() {
-  for (let r = 0; r < rows; r++) {
-    for (let c = 0; c < cols; c++) {
-      const cell = board[r][c];
-      if (!cell.revealed && !cell.mine) return;
-    }
-  }
-  showVictory();
-}
-
-function showLooser() {
-  gameOver = true;
-  screamSound.play();
-  messageContainer.innerHTML = `
-    <div class="looser-message">LOOSER</div>
-    <div class="subtext">YOU SCARED THE KITTY</div>
-  `;
-}
-
-function showVictory() {
-  gameOver = true;
-  winSound.play();
-  messageContainer.innerHTML = `
-    <div class="winner-message">YOU SURVIVED</div>
-    <div class="subtext">Kitty örökké hálás lesz – túlélted a legcukibb poklot</div>
-  `;
-}
-
-function renderBoard() {
-  boardElement.innerHTML = "";
-  for (let r = 0; r < rows; r++) {
-    for (let c = 0; c < cols; c++) {
-      let div = document.createElement("div");
-      div.classList.add("cell");
-      div.addEventListener("click", () => {
-        if (!gameOver) reveal(r, c);
-      });
-      boardElement.appendChild(div);
-      board[r][c].element = div;
-    }
+  const totalCells = rows * cols;
+  if (revealedCount === totalCells - bombs) {
+    endGame(true);
   }
 }
 
-function startGame() {
-  setDifficulty(difficultySelect.value);
-  messageContainer.innerHTML = "";
-  glitchMode = glitchInput.value.trim().toLowerCase() === "glitchkitti";
-  if (glitchMode) {
-    document.body.classList.add("glitch");
-  } else {
-    document.body.classList.remove("glitch");
-  }
-  createBoard();
-  renderBoard();
+function activateGlitchKitti() {
+  alert('🩸 glitchkitti mód aktiválva! (Hamarosan jön!)');
 }
-
-startButton.addEventListener("click", startGame);
-
-document.addEventListener("DOMContentLoaded", () => {
-  setDifficulty("easy");
-});
