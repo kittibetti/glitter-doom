@@ -66,6 +66,9 @@ function revealCell(r, c) {
 
   if (cell.bomb) {
     cell.element.classList.add('bomb');
+    cell.element.style.backgroundImage = "url('hello_kitty.png')";
+    cell.element.style.backgroundSize = "cover";
+    cell.element.style.backgroundPosition = "center";
     endGame(false);
   } else {
     const count = countAdjacentBombs(r, c);
@@ -106,20 +109,24 @@ function endGame(won) {
     overlay.textContent = '💅 WINNER 💅';
     overlay.style.color = '#00ffcc';
     overlay.style.textShadow = '0 0 10px #00fff2, 0 0 20px #00fff2, 0 0 30px #00fff2';
-    const winAudio = new Audio('sounds/victory.mp3');
+    const winAudio = new Audio('congratulations-deep-voice-172153.mp3');
     winAudio.play();
   } else {
     overlay.textContent = '💀 LOOSER 💀';
     overlay.style.color = '#ff004c';
     overlay.style.textShadow = '0 0 5px #ff004c, 0 0 10px #ff0000, 0 0 20px #ff0000';
-    const loseAudio = new Audio('sounds/horror.mp3');
+    const loseAudio = new Audio('scream.mp3');
     loseAudio.play();
   }
 
   for (let r = 0; r < rows; r++) {
     for (let c = 0; c < cols; c++) {
       if (board[r][c].bomb) {
-        board[r][c].element.classList.add('bomb');
+        const cell = board[r][c];
+        cell.element.classList.add('bomb');
+        cell.element.style.backgroundImage = "url('hello_kitty.png')";
+        cell.element.style.backgroundSize = "cover";
+        cell.element.style.backgroundPosition = "center";
       }
     }
   }
