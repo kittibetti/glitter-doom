@@ -3,31 +3,29 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#ff69b4" />
+  <link rel="manifest" href="manifest.json" />
+  <link rel="icon" href="icon.png" />
   <title>🎬 Glitter Doom: Kitty’s Revenge™</title>
   <link rel="stylesheet" href="style.css" />
-  <link rel="manifest" href="manifest.json" />
-  <style>
-    .cell.revealed:not(.bomb) {
-      background-color: #bbb !important;
-    }
-  </style>
 </head>
 <body>
   <h1>🎬 Glitter Doom: Kitty’s Revenge™</h1>
-  <p class="tagline">Digitally remastered in 8-bit terror – csak erős idegzetű cuki lányoknak™</p>
-  <div class="controls">
-    <select id="difficulty" onchange="restartGame()">
+  <div id="menu">
+    <label for="difficulty">Nehézségi szint:</label>
+    <select id="difficulty">
       <option value="easy">Könnyű (8x8, 10 akna)</option>
-      <option value="medium">Közepes (10x10, 15 akna)</option>
+      <option value="medium">Közepes (10x10, 20 akna)</option>
       <option value="hard">Nehéz (12x12, 25 akna)</option>
-      <option value="extreme" selected>Extra (20x20, 50 akna)</option>
+      <option value="extreme">Extra (20x20, 50 akna)</option>
     </select>
-    <button onclick="restartGame()">Újrajáték</button>
+    <input type="text" id="glitch-input" placeholder="Titkos kód..." />
+    <button id="start-button">ENTER TO DOOM</button>
   </div>
+
+  <div id="message-container"></div>
   <div id="board"></div>
-  <div id="looser" class="looser-text hidden">LOOSER</div>
-  <p id="scared-text" class="hidden tagline">YOU SCARED THE KITTY!</p>
-  <audio id="scream" src="scream.mp3"></audio>
+
   <script src="main.js"></script>
 </body>
 </html>
