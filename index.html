@@ -2,170 +2,122 @@
 <html lang="hu">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>🎬 Glitter Doom: Kitty’s Revenge™</title>
-  <link rel="icon" href="kitty-icon.png" type="image/png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🎬 Glitter Doom: Kitty's Revenge™</title>
   <link rel="stylesheet" href="style.css" />
   <style>
     body {
       margin: 0;
-      padding: 0;
-      background: linear-gradient(135deg, #ffccf9, #b6f2ff, #fcd6ff);
-      font-family: 'Comic Sans MS', cursive, sans-serif;
-      overflow: hidden;
-    }
-    .menu {
+      font-family: 'Comic Sans MS', sans-serif;
+      background: linear-gradient(135deg, #111, #300030);
+      color: white;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      height: 100vh;
+      min-height: 100vh;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    #main-menu {
       text-align: center;
-      background: rgba(255, 255, 255, 0.05);
-      backdrop-filter: blur(10px);
-      animation: fadeIn 2s ease;
     }
-    .title {
-      font-size: 3rem;
-      color: #ff007f;
-      text-shadow: 0 0 5px #fff, 0 0 10px #ff00ff, 0 0 20px #ff00ff;
-      margin-bottom: 2rem;
+
+    #main-menu h1 {
+      font-size: 2em;
+      margin-bottom: 1em;
     }
-    .glitch {
-      position: relative;
-    }
-    .glitch::before, .glitch::after {
-      content: attr(class);
-      position: absolute;
-      left: 0;
-      top: 0;
-      width: 100%;
-      overflow: hidden;
-      color: #fff;
-      z-index: -1;
-    }
-    .glitch::before {
-      left: 2px;
-      text-shadow: -2px 0 red;
-      animation: glitchLeft 1s infinite linear alternate-reverse;
-    }
-    .glitch::after {
-      left: -2px;
-      text-shadow: -2px 0 cyan;
-      animation: glitchRight 1s infinite linear alternate-reverse;
-    }
-    @keyframes glitchLeft {
-      0% { clip-path: inset(0 0 10% 0); }
-      50% { clip-path: inset(20% 0 40% 0); }
-      100% { clip-path: inset(10% 0 0 0); }
-    }
-    @keyframes glitchRight {
-      0% { clip-path: inset(10% 0 0 0); }
-      50% { clip-path: inset(0 0 30% 0); }
-      100% { clip-path: inset(5% 0 15% 0); }
-    }
-    button {
-      background: #ff69b4;
+
+    #main-menu button {
+      margin: 0.5em;
+      padding: 1em 2em;
+      font-size: 1em;
       border: none;
-      border-radius: 12px;
-      padding: 1rem 2rem;
-      margin: 0.5rem;
-      font-size: 1.2rem;
+      border-radius: 10px;
+      background-color: hotpink;
       color: white;
       cursor: pointer;
-      box-shadow: 0 0 10px #ff69b4, 0 0 20px #ff1493;
-      transition: transform 0.2s, box-shadow 0.2s;
+      transition: transform 0.2s;
     }
-    button:hover {
+
+    #main-menu button:hover {
       transform: scale(1.1);
-      box-shadow: 0 0 20px #ff1493, 0 0 40px #ff1493;
+      background-color: deeppink;
     }
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
+
     #game-board {
       display: grid;
       gap: 2px;
-      justify-content: center;
-      padding: 20px;
-      background: rgba(255, 255, 255, 0.08);
-      backdrop-filter: blur(6px);
+      margin: 20px auto;
     }
+
     .cell {
       width: 40px;
       height: 40px;
-      background-color: #fff0fa;
-      border-radius: 8px;
-      box-shadow: inset 0 0 4px #ffbde6;
+      background-color: #444;
+      border-radius: 6px;
       display: flex;
-      align-items: center;
       justify-content: center;
-      font-size: 1.2rem;
+      align-items: center;
       font-weight: bold;
-      color: #ff1493;
+      color: white;
+      font-size: 1.2em;
       cursor: pointer;
       user-select: none;
-      transition: background-color 0.2s, transform 0.1s;
     }
+
     .cell.revealed {
-      background-color: #ffe0f4;
-      transform: scale(0.98);
+      background-color: #222;
     }
+
     .cell.bomb {
-      background-image: url('kitty-bomb.png');
+      background-image: url('hello-kitty-bomb.png');
       background-size: cover;
       background-position: center;
     }
+
     #result-overlay {
       position: fixed;
       top: 0;
       left: 0;
-      width: 100vw;
-      height: 100vh;
-      background-color: rgba(0, 0, 0, 0.9);
-      color: #ff004c;
-      font-size: 6vw;
-      font-weight: bold;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(#ff0033cc, #000000ee);
       display: flex;
       align-items: center;
       justify-content: center;
-      text-shadow: 0 0 5px #ff004c, 0 0 10px #ff0000, 0 0 20px #ff0000;
-      z-index: 1000;
-      animation: looserIn 0.8s ease-out forwards;
-      font-family: 'Impact', sans-serif;
+      flex-direction: column;
+      z-index: 9999;
     }
-    @keyframes looserIn {
-      0% {
-        opacity: 0;
-        transform: scale(0.5) rotate(0deg);
-        filter: blur(10px);
-      }
-      70% {
-        transform: scale(1.2) rotate(3deg);
-      }
-      100% {
-        opacity: 1;
-        transform: scale(1) rotate(0deg);
-        filter: blur(0);
-      }
-    }
-    .hidden {
-      display: none;
+
+    #result-text {
+      font-size: 5em;
+      font-weight: bold;
+      color: red;
+      text-shadow: 0 0 20px red, 0 0 50px white;
     }
   </style>
 </head>
 <body>
-  <div id="main-menu" class="menu active">
-    <h1 class="title glitch">🎬 Glitter Doom: Kitty’s Revenge™</h1>
-    <button onclick="startGame('easy')">💖 Könnyű</button>
-    <button onclick="startGame('medium')">💀 Közepes</button>
-    <button onclick="startGame('hard')">🔥 Pokol</button>
-    <button onclick="activateGlitchKitti()">👑 glitchkitti mód</button>
+  <div id="main-menu">
+    <h1>🎬 Glitter Doom: Kitty's Revenge™</h1>
+    <button onclick="startGame('easy')">🎀 Könnyű</button>
+    <button onclick="startGame('medium')">🧨 Közepes</button>
+    <button onclick="startGame('hard')">💣 Nehéz</button>
+    <button onclick="activateGlitchKitti()">💥 glitchkitti mód</button>
   </div>
+
   <div id="game-board" class="hidden"></div>
-  <div id="result-overlay" class="hidden">💀 LOOSER 💀</div>
-  <audio id="glitch-audio" src="glitch.mp3"></audio>
+
+  <div id="result-overlay" class="hidden">
+    <div id="result-text">LOOSER</div>
+  </div>
+
+  <audio id="glitch-audio" src="glitch.mp3" preload="auto"></audio>
+
   <script src="main.js"></script>
 </body>
 </html>
