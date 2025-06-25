@@ -159,5 +159,8 @@ function checkWin() {
 }
 
 function activateGlitchKitti() {
-  alert('🩸 glitchkitti mód aktiválva! (Hamarosan jön!)');
+  const glitchSound = new Audio('glitch.mp3');
+  glitchSound.play();
+
+  alert('🩸 glitchkitti mód aktiválva!');
 }
