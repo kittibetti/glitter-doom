@@ -10,10 +10,10 @@ let boardSize, bombCount, cells, gameOver;
 
 // A játék indítása
 function startGame(difficulty) {
-  console.log("🎯 startGame()", difficulty);
-  menuEl.classList.add("hidden");
-  boardEl.classList.remove("hidden");
-  resultOverlay.classList.add("hidden");
+  document.getElementById("result-overlay").classList.add("hidden");
+  document.getElementById("result-text").textContent = "";
+  document.getElementById("main-menu").classList.add("hidden");
+  document.getElementById("game-board").classList.remove("hidden");
 
   gameOver = false;
   boardEl.innerHTML = "";
