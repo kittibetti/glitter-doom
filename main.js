@@ -1,3 +1,8 @@
+console.log("🎮 main.js betöltve");
+
+function startGame(difficulty) {
+  console.log("startGame hívva:", difficulty);
+
 let board = [];
 let rows = 8;
 let cols = 8;
