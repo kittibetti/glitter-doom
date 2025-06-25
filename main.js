@@ -42,6 +42,7 @@ function generateBoard() {
     }
     board.push(row);
   }
+
   placeBombs();
 }
 
@@ -59,6 +60,13 @@ function placeBombs() {
 
 function revealCell(r, c) {
   if (gameOver || board[r][c].revealed) return;
+
+  // 💣 Első kattintásra ne lehessen bomba
+  if (revealedCount === 0 && board[r][c].bomb) {
+    board[r][c].bomb = false;
+    relocateBomb();
+  }
+
   const cell = board[r][c];
   cell.revealed = true;
   revealedCount++;
@@ -66,6 +74,7 @@ function revealCell(r, c) {
 
   if (cell.bomb) {
     cell.element.classList.add('bomb');
+    cell.element.innerHTML = '<img src="kitty-bomb.png" alt="💣" class="kitty-bomb">';
     endGame(false);
   } else {
     const count = countAdjacentBombs(r, c);
@@ -75,17 +84,24 @@ function revealCell(r, c) {
       for (let dr = -1; dr <= 1; dr++) {
         for (let dc = -1; dc <= 1; dc++) {
           const nr = r + dr, nc = c + dc;
-          if (
-            nr >= 0 && nr < rows &&
-            nc >= 0 && nc < cols &&
-            !(dr === 0 && dc === 0)
-          ) {
+          if (nr >= 0 && nr < rows && nc >= 0 && nc < cols && !(dr === 0 && dc === 0)) {
             revealCell(nr, nc);
           }
         }
       }
     }
     checkWin();
+  }
+}
+
+function relocateBomb() {
+  for (let r = 0; r < rows; r++) {
+    for (let c = 0; c < cols; c++) {
+      if (!board[r][c].bomb && !board[r][c].revealed) {
+        board[r][c].bomb = true;
+        return;
+      }
+    }
   }
 }
 
@@ -106,7 +122,6 @@ function endGame(won) {
   gameOver = true;
   const overlay = document.getElementById('result-overlay');
   overlay.classList.remove('hidden');
-
   if (won) {
     overlay.textContent = '💅 WINNER 💅';
     overlay.style.color = '#00ffcc';
@@ -125,6 +140,7 @@ function endGame(won) {
     for (let c = 0; c < cols; c++) {
       if (board[r][c].bomb) {
         board[r][c].element.classList.add('bomb');
+        board[r][c].element.innerHTML = '<img src="kitty-bomb.png" alt="💣" class="kitty-bomb">';
       }
     }
   }
