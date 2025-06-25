@@ -134,7 +134,7 @@ function endGame() {
 function checkWin() {
   const unrevealed = cells.filter(c => !c.revealed);
   if (unrevealed.every(c => c.bomb)) {
-    resultOverlay.textContent = "🎉 WINNER 🎉";
+    document.getElementById("result-text").textContent = "🎉 WINNER 🎉";
     resultOverlay.classList.remove("hidden");
     gameOver = true;
   }
