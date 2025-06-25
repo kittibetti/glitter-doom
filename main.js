@@ -118,3 +118,16 @@ function activateGlitchMode() {
   glitchAudio.play();
   setTimeout(() => startGame("hard"), 1000);
 }
+window.startGame = function(difficulty) {
+  console.log("Játék indítása:", difficulty);
+  // Itt folytathatod a játék logikáját
+  menuEl.style.display = 'none';
+  boardEl.style.display = 'grid';
+  // TODO: generáld le a pályát, állítsd be a nehézséget, stb.
+};
+
+window.activateGlitchKitti = function() {
+  console.log("👾 GlitchKitti mód aktiválva!");
+  // TODO: GlitchKitti mód kódja
+};
+
