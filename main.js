@@ -139,12 +139,15 @@ function endGame(won) {
   resultText.textContent = won ? '🎉 Győzelem!' : '💀 LOOSER';
   resultOverlay.classList.remove('hidden');
 
-  // Opció: fedd fel az összes bombát
-  cells.forEach((cell) => {
-    if (cell.dataset.bomb === 'true') {
-      cell.classList.add('bomb');
-    }
-  });
+// Opció: fedd fel az összes bombát
+cells.forEach((cell) => {
+  if (cell.dataset.bomb === 'true') {
+    cell.classList.add('bomb');
+    cell.style.backgroundImage = "url('hello-kitty-bomb.png')";
+    cell.style.backgroundSize = "cover";
+    cell.style.backgroundPosition = "center";
+  }
+});
 }
 
 // 🧟 Glitch mód (később felturbózzuk!)
