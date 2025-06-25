@@ -12,7 +12,7 @@ function startGame(difficulty) {
   menu.classList.add("hidden");
   board.classList.remove("hidden");
   resultOverlay.classList.add("hidden");
-}
+
   gameOver = false;
   board.innerHTML = "";
 
