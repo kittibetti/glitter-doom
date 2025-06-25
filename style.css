@@ -1,124 +1,122 @@
 body {
-  font-family: 'Arial', sans-serif;
   margin: 0;
-  padding: 0;
-  text-align: center;
-  background: linear-gradient(135deg, red, orange, yellow, green, blue, indigo, violet);
+  font-family: 'Comic Sans MS', sans-serif;
+  background: linear-gradient(135deg, #111, #300030);
   color: white;
-  overflow-x: hidden;
-}
-
-h1 {
-  margin: 20px 0;
-  font-size: 2em;
-  text-shadow: 2px 2px 5px black;
-}
-
-#menu {
-  margin: 20px auto;
   display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 10px;
-}
-
-select,
-input,
-button {
-  padding: 10px;
-  font-size: 1em;
-  border: none;
-  border-radius: 8px;
-  box-shadow: 0 0 10px rgba(255, 255, 255, 0.4);
-}
-
-button:hover {
-  background-color: #ffc0cb;
-  cursor: pointer;
-}
-
-#board {
-  display: grid;
-  gap: 1px;
-  justify-content: center;
-  margin: 20px auto;
-  background: #333;
-  padding: 5px;
-  max-width: 95vw;
-  overflow: auto;
-}
-
-.cell {
-  width: 30px;
-  height: 30px;
-  background-color: #ccc;
-  color: black;
-  font-weight: bold;
-  font-size: 14px;
-  display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
+  min-height: 100vh;
+}
+
+.hidden {
+  display: none;
+}
+
+/* Főmenü */
+#main-menu {
+  text-align: center;
+}
+
+#main-menu h1 {
+  font-size: 2.5em;
+  margin-bottom: 1em;
+  text-shadow: 0 0 10px hotpink, 0 0 30px white;
+}
+
+#main-menu button {
+  margin: 0.5em;
+  padding: 1em 2em;
+  font-size: 1em;
+  border: none;
+  border-radius: 10px;
+  background-color: hotpink;
+  color: white;
+  cursor: pointer;
+  transition: transform 0.2s, background-color 0.2s;
+}
+
+#main-menu button:hover {
+  transform: scale(1.1);
+  background-color: deeppink;
+}
+
+/* Játéktábla */
+#game-board {
+  display: grid;
+  gap: 2px;
+  margin: 20px auto;
+}
+
+/* Mezők */
+.cell {
+  width: 40px;
+  height: 40px;
+  background-color: #444;
+  border-radius: 6px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+  color: white;
+  font-size: 1.2em;
+  cursor: pointer;
   user-select: none;
-  border-radius: 2px;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+.cell:hover {
+  background-color: #666;
+  transform: scale(1.05);
 }
 
 .cell.revealed {
-  background-color: #666;
-  color: white;
+  background-color: #222;
 }
 
-.cell.mine img {
+.cell.bomb {
+  background-image: url("kitty-bomb.png");
+  background-size: cover;
+  background-position: center;
+}
+
+/* Eredmény overlay */
+#result-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  background: radial-gradient(#ff0033cc, #000000ee);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  z-index: 9999;
+  animation: fadeIn 0.6s ease-in-out;
 }
 
-.looser-message {
-  font-size: 3em;
+#result-text {
+  font-size: 5em;
   font-weight: bold;
-  color: #ff00cc;
-  text-shadow: 2px 2px 8px black;
-  animation: float 2s infinite ease-in-out;
-  transform: perspective(200px) rotateX(10deg);
+  color: red;
+  text-shadow: 0 0 20px red, 0 0 50px white;
+  transform: scale(1.1);
+  animation: glitch 1s infinite;
 }
 
-.winner-message {
-  font-size: 3em;
-  font-weight: bold;
-  color: #00ffcc;
-  text-shadow: 2px 2px 8px black;
-  animation: float 2s infinite ease-in-out;
-  transform: perspective(200px) rotateX(10deg);
+/* Animációk */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
-.subtext {
-  font-size: 1em;
-  margin-top: 10px;
-  color: #fff;
-  font-style: italic;
-  text-shadow: 1px 1px 3px black;
-}
-
-@keyframes float {
-  0% { transform: translateY(0); }
-  50% { transform: translateY(-10px); }
-  100% { transform: translateY(0); }
-}
-
-body.glitch {
-  animation: glitch-bg 0.3s infinite;
-}
-
-@keyframes glitch-bg {
-  0% { filter: hue-rotate(0deg); }
-  50% { filter: hue-rotate(45deg); }
-  100% { filter: hue-rotate(0deg); }
-}
-
-@media (max-width: 600px) {
-  .cell {
-    width: 24px;
-    height: 24px;
-    font-size: 12px;
-  }
+@keyframes glitch {
+  0% { transform: scale(1) translate(0, 0); }
+  20% { transform: scale(1.1) translate(-2px, 2px); }
+  40% { transform: scale(1) translate(2px, -2px); }
+  60% { transform: scale(1.05) translate(-1px, 1px); }
+  80% { transform: scale(1) translate(1px, -1px); }
+  100% { transform: scale(1) translate(0, 0); }
 }
