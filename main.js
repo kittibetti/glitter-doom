@@ -1,8 +1,3 @@
-console.log("🎮 main.js betöltve");
-
-function startGame(difficulty) {
-  console.log("startGame hívva:", difficulty);
-
 let board = [];
 let rows = 8;
 let cols = 8;
@@ -47,7 +42,6 @@ function generateBoard() {
     }
     board.push(row);
   }
-
   placeBombs();
 }
 
@@ -65,13 +59,6 @@ function placeBombs() {
 
 function revealCell(r, c) {
   if (gameOver || board[r][c].revealed) return;
-
-  // 💣 Első kattintásra ne lehessen bomba
-  if (revealedCount === 0 && board[r][c].bomb) {
-    board[r][c].bomb = false;
-    relocateBomb();
-  }
-
   const cell = board[r][c];
   cell.revealed = true;
   revealedCount++;
@@ -79,7 +66,6 @@ function revealCell(r, c) {
 
   if (cell.bomb) {
     cell.element.classList.add('bomb');
-    cell.element.innerHTML = '<img src="kitty-bomb.png" alt="💣" class="kitty-bomb">';
     endGame(false);
   } else {
     const count = countAdjacentBombs(r, c);
@@ -96,17 +82,6 @@ function revealCell(r, c) {
       }
     }
     checkWin();
-  }
-}
-
-function relocateBomb() {
-  for (let r = 0; r < rows; r++) {
-    for (let c = 0; c < cols; c++) {
-      if (!board[r][c].bomb && !board[r][c].revealed) {
-        board[r][c].bomb = true;
-        return;
-      }
-    }
   }
 }
 
@@ -145,7 +120,6 @@ function endGame(won) {
     for (let c = 0; c < cols; c++) {
       if (board[r][c].bomb) {
         board[r][c].element.classList.add('bomb');
-        board[r][c].element.innerHTML = '<img src="kitty-bomb.png" alt="💣" class="kitty-bomb">';
       }
     }
   }
@@ -159,8 +133,7 @@ function checkWin() {
 }
 
 function activateGlitchKitti() {
-  const glitchSound = new Audio('glitch.mp3');
-  glitchSound.play();
-
-  alert('🩸 glitchkitti mód aktiválva!');
+  const glitchAudio = new Audio('sounds/glitch.mp3');
+  glitchAudio.play();
+  alert('🩸 glitchkitti mód aktiválva! (Hamarosan jön!)');
 }
