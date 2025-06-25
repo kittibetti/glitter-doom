@@ -1,4 +1,4 @@
-// main.js – működő és stabil verzió
+console.log("✅ main.js betöltve");// main.js – működő és stabil verzió
 
 const board = document.getElementById("game-board");
 const menu = document.getElementById("main-menu");
@@ -8,10 +8,11 @@ const glitchAudio = document.getElementById("glitch-audio");
 let boardSize, bombCount, cells, gameOver;
 
 function startGame(difficulty) {
+  console.log("🎯 startGame()", difficulty);
   menu.classList.add("hidden");
   board.classList.remove("hidden");
   resultOverlay.classList.add("hidden");
-
+}
   gameOver = false;
   board.innerHTML = "";
 
