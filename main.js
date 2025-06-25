@@ -125,10 +125,12 @@ function endGame() {
   gameOver = true;
   glitchAudio.play();
   resultOverlay.classList.remove("hidden");
+  document.getElementById("result-text").textContent = "💥 LOOSER 💥";
   cells.forEach(cell => {
     if (cell.bomb) cell.element.classList.add("bomb");
   });
 }
+
 
 // Nyert helyzet ellenőrzése
 function checkWin() {
