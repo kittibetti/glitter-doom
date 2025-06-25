@@ -76,7 +76,7 @@ body {
 }
 
 .cell.bomb {
-  background-image: url("kitty-bomb.png");
+  background-image: url('hello-kitty-bomb.png');
   background-size: cover;
   background-position: center;
 }
