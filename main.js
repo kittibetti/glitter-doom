@@ -1,139 +1,141 @@
-let board = [];
-let rows = 8;
-let cols = 8;
-let bombs = 10;
-let gameOver = false;
-let revealedCount = 0;
+// main.js – működő és stabil verzió
+
+const board = document.getElementById("game-board");
+const menu = document.getElementById("main-menu");
+const resultOverlay = document.getElementById("result-overlay");
+const glitchAudio = document.getElementById("glitch-audio");
+
+let boardSize, bombCount, cells, gameOver;
 
 function startGame(difficulty) {
-  document.getElementById('main-menu').classList.add('hidden');
-  document.getElementById('game-board').classList.remove('hidden');
-  document.getElementById('result-overlay').classList.add('hidden');
+  menu.classList.add("hidden");
+  board.classList.remove("hidden");
+  resultOverlay.classList.add("hidden");
+
   gameOver = false;
-  revealedCount = 0;
+  board.innerHTML = "";
 
   switch (difficulty) {
-    case 'easy': rows = cols = 8; bombs = 10; break;
-    case 'medium': rows = cols = 12; bombs = 20; break;
-    case 'hard': rows = cols = 16; bombs = 40; break;
+    case "easy":
+      boardSize = 8;
+      bombCount = 10;
+      break;
+    case "medium":
+      boardSize = 12;
+      bombCount = 24;
+      break;
+    case "hard":
+      boardSize = 16;
+      bombCount = 40;
+      break;
+    default:
+      boardSize = 8;
+      bombCount = 10;
   }
 
-  generateBoard();
-}
+  board.style.gridTemplateColumns = `repeat(${boardSize}, 40px)`;
+  cells = [];
 
-function generateBoard() {
-  board = [];
-  const boardEl = document.getElementById('game-board');
-  boardEl.innerHTML = '';
-  boardEl.style.gridTemplateColumns = `repeat(${cols}, 1fr)`;
-
-  for (let r = 0; r < rows; r++) {
-    const row = [];
-    for (let c = 0; c < cols; c++) {
-      const cell = {
-        revealed: false,
-        bomb: false,
-        element: document.createElement('div')
-      };
-      cell.element.classList.add('cell');
-      cell.element.addEventListener('click', () => revealCell(r, c));
-      boardEl.appendChild(cell.element);
-      row.push(cell);
-    }
-    board.push(row);
+  for (let i = 0; i < boardSize * boardSize; i++) {
+    const cell = document.createElement("div");
+    cell.classList.add("cell");
+    cell.dataset.index = i;
+    cell.addEventListener("click", () => revealCell(i));
+    board.appendChild(cell);
+    cells.push({
+      element: cell,
+      bomb: false,
+      revealed: false,
+      adjacentBombs: 0,
+    });
   }
+
   placeBombs();
+  calculateAdjacentNumbers();
 }
 
 function placeBombs() {
-  let placed = 0;
-  while (placed < bombs) {
-    const r = Math.floor(Math.random() * rows);
-    const c = Math.floor(Math.random() * cols);
-    if (!board[r][c].bomb) {
-      board[r][c].bomb = true;
-      placed++;
+  let bombsPlaced = 0;
+  while (bombsPlaced < bombCount) {
+    const index = Math.floor(Math.random() * cells.length);
+    if (!cells[index].bomb) {
+      cells[index].bomb = true;
+      bombsPlaced++;
     }
   }
 }
 
-function revealCell(r, c) {
-  if (gameOver || board[r][c].revealed) return;
-  const cell = board[r][c];
+function calculateAdjacentNumbers() {
+  for (let i = 0; i < cells.length; i++) {
+    if (cells[i].bomb) continue;
+    const neighbors = getNeighbors(i);
+    cells[i].adjacentBombs = neighbors.filter(n => cells[n].bomb).length;
+  }
+}
+
+function getNeighbors(index) {
+  const neighbors = [];
+  const x = index % boardSize;
+  const y = Math.floor(index / boardSize);
+
+  for (let dy = -1; dy <= 1; dy++) {
+    for (let dx = -1; dx <= 1; dx++) {
+      if (dx === 0 && dy === 0) continue;
+      const nx = x + dx;
+      const ny = y + dy;
+      if (nx >= 0 && ny >= 0 && nx < boardSize && ny < boardSize) {
+        neighbors.push(ny * boardSize + nx);
+      }
+    }
+  }
+  return neighbors;
+}
+
+function revealCell(index) {
+  if (gameOver || cells[index].revealed) return;
+
+  const cell = cells[index];
   cell.revealed = true;
-  revealedCount++;
-  cell.element.classList.add('revealed');
+  cell.element.classList.add("revealed");
 
   if (cell.bomb) {
-    cell.element.classList.add('bomb');
-    endGame(false);
+    cell.element.classList.add("bomb");
+    endGame();
+    return;
+  }
+
+  if (cell.adjacentBombs > 0) {
+    cell.element.textContent = cell.adjacentBombs;
   } else {
-    const count = countAdjacentBombs(r, c);
-    if (count > 0) {
-      cell.element.textContent = count;
-    } else {
-      for (let dr = -1; dr <= 1; dr++) {
-        for (let dc = -1; dc <= 1; dc++) {
-          const nr = r + dr, nc = c + dc;
-          if (nr >= 0 && nr < rows && nc >= 0 && nc < cols && !(dr === 0 && dc === 0)) {
-            revealCell(nr, nc);
-          }
-        }
-      }
-    }
-    checkWin();
+    const neighbors = getNeighbors(index);
+    neighbors.forEach(revealCell);
   }
+
+  checkWin();
 }
 
-function countAdjacentBombs(r, c) {
-  let count = 0;
-  for (let dr = -1; dr <= 1; dr++) {
-    for (let dc = -1; dc <= 1; dc++) {
-      const nr = r + dr, nc = c + dc;
-      if (nr >= 0 && nr < rows && nc >= 0 && nc < cols) {
-        if (board[nr][nc].bomb) count++;
-      }
-    }
-  }
-  return count;
-}
-
-function endGame(won) {
+function endGame() {
   gameOver = true;
-  const overlay = document.getElementById('result-overlay');
-  overlay.classList.remove('hidden');
-  if (won) {
-    overlay.textContent = '💅 WINNER 💅';
-    overlay.style.color = '#00ffcc';
-    overlay.style.textShadow = '0 0 10px #00fff2, 0 0 20px #00fff2, 0 0 30px #00fff2';
-    const winAudio = new Audio('sounds/victory.mp3');
-    winAudio.play();
-  } else {
-    overlay.textContent = '💀 LOOSER 💀';
-    overlay.style.color = '#ff004c';
-    overlay.style.textShadow = '0 0 5px #ff004c, 0 0 10px #ff0000, 0 0 20px #ff0000';
-    const loseAudio = new Audio('sounds/horror.mp3');
-    loseAudio.play();
-  }
-
-  for (let r = 0; r < rows; r++) {
-    for (let c = 0; c < cols; c++) {
-      if (board[r][c].bomb) {
-        board[r][c].element.classList.add('bomb');
-      }
+  glitchAudio.play();
+  resultOverlay.classList.remove("hidden");
+  cells.forEach((cell, i) => {
+    if (cell.bomb) {
+      cell.element.classList.add("bomb");
     }
-  }
+  });
 }
 
 function checkWin() {
-  const totalCells = rows * cols;
-  if (revealedCount === totalCells - bombs) {
-    endGame(true);
+  const unrevealed = cells.filter(c => !c.revealed);
+  const allBombs = unrevealed.every(c => c.bomb);
+  if (allBombs) {
+    resultOverlay.textContent = "🎉 WINNER 🎉";
+    resultOverlay.classList.remove("hidden");
+    gameOver = true;
   }
 }
 
 function activateGlitchKitti() {
-  const glitchAudio = new Audio('sounds/glitch.mp3');
+  startGame("hard");
   glitchAudio.play();
-  alert('🩸 glitchkitti mód aktiválva! (Hamarosan jön!)');
 }
