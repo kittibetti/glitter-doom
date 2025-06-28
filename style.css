@@ -94,23 +94,21 @@ button:hover {
   display: grid;
   gap: 2px;
   margin: 2rem auto;
-  width: 95vmin;
-  height: auto;
+  width: 90vmin;
+  height: 90vmin;
 }
 
 .cell {
-  aspect-ratio: 1;
+  aspect-ratio: 1 / 1;
   width: 100%;
   background-color: #ffe6f0;
   border: 1px solid #ccc;
   font-weight: bold;
-  font-size: 1.5vmin;
-  line-height: 1; /* 🔧 Ez gátolja a sortávolság-növekedést */
+  font-size: clamp(0.8rem, 2.5vmin, 1.4rem);
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  overflow: hidden; /* biztos ami biztos */
 }
 
 .cell.revealed {
