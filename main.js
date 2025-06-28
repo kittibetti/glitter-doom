@@ -13,7 +13,6 @@ document.getElementById('hard')?.addEventListener('click', () => startGame('hard
 document.getElementById('glitchkitti')?.addEventListener('click', () => activateGlitchMode());
 document.getElementById('restart-button')?.addEventListener('click', () => location.reload());
 
-});
 
 function startGame(difficulty) {
   console.log(`🎮 Játék indul (${difficulty})`);
