@@ -4,7 +4,6 @@ const boardEl = document.getElementById("game-board");
 const menuEl = document.getElementById("main-menu");
 const resultOverlay = document.getElementById("result-overlay");
 const resultText = document.getElementById("result-text");
-//const glitchAudio = document.getElementById("glitch-audio");
 
 const restartBtn = document.getElementById("restart-button");
 restartBtn.addEventListener("click", () => {
@@ -30,8 +29,8 @@ function startGame(difficulty, glitch = false) {
   boardEl.classList.remove("hidden");
   resultOverlay.classList.remove("show");
   resultText.textContent = "";
-  glitchAudio.pause();
-  glitchAudio.currentTime = 0;
+  //glitchAudio.pause();
+  //glitchAudio.currentTime = 0;
 
   if (difficulty === "easy") {
     boardSize = 8;
@@ -68,7 +67,7 @@ function startGame(difficulty, glitch = false) {
 
   if (glitch) {
     document.body.classList.add("glitch");
-    glitchAudio.play();
+    //glitchAudio.play();
     setTimeout(() => document.body.classList.remove("glitch"), 1500);
   }
 }
@@ -139,7 +138,7 @@ function endGame(won) {
   resultText.textContent = won ? "🎉 WINNER 🎉" : "💥 LOOSER 💥";
   resultOverlay.classList.add("show");
 
-  if (!won && glitchAudio) {
+  //if (!won && glitchAudio) {
     //glitchAudio.play();
   }
 
