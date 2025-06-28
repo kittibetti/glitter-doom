@@ -6,13 +6,13 @@ const resultOverlay = document.getElementById("result-overlay");
 const resultText = document.getElementById("result-text");
 const glitchAudio = document.getElementById("glitch-audio");
 
-let boardSize, bombCount, cells, gameOver;
+// 👉 Ne várjunk DOMContentLoaded-re, mivel a script már a </body> előtt van
+document.getElementById('easy')?.addEventListener('click', () => startGame('easy'));
+document.getElementById('medium')?.addEventListener('click', () => startGame('medium'));
+document.getElementById('hard')?.addEventListener('click', () => startGame('hard'));
+document.getElementById('glitchkitti')?.addEventListener('click', () => activateGlitchMode());
+document.getElementById('restart-button')?.addEventListener('click', () => location.reload());
 
-window.addEventListener('DOMContentLoaded', () => {
-  document.getElementById('easy').addEventListener('click', () => startGame('easy'));
-  document.getElementById('medium').addEventListener('click', () => startGame('medium'));
-  document.getElementById('hard').addEventListener('click', () => startGame('hard'));
-  document.getElementById('glitchkitti').addEventListener('click', () => activateGlitchMode());
 });
 
 function startGame(difficulty) {
