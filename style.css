@@ -99,7 +99,7 @@ button:hover {
   color: red;
   font-size: 2rem;
   text-shadow: 0 0 10px #fff;
-  display: flex;
+  display: none;
   flex-direction: column;
   justify-content: center;
   align-items: center;
@@ -107,8 +107,8 @@ button:hover {
 }
 
 /* 🚫 Elrejtés */
-.hidden {
-  display: none;
+#result-overlay.show {
+  display: flex;
 }
 
 /* 🔧 Glitch effekt (előkészítve) */
