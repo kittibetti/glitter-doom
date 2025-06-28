@@ -18,21 +18,20 @@ let cells = [];
 let gameOver = false;
 
 function startGame(difficulty) {
-  console.log("Játék indult ezzel a nehézséggel:", difficulty);
-  menuEl.classList.add('hidden');
-  boardEl.classList.remove('hidden');
-  resultOverlay.classList.add('hidden');
-  resultText.textContent = '';
-  glitchAudio.pause();
-  glitchAudio.currentTime = 0;
+  console.log(`🎮 Játék indul: ${difficulty}`);
 
+  // Menü elrejtése
+  menuEl.style.display = 'none';
+  boardEl.style.display = 'grid';
+
+  // Nehézség alapján méret és bomba mennyiség
   if (difficulty === 'easy') {
     boardSize = 8;
     bombCount = 10;
   } else if (difficulty === 'medium') {
     boardSize = 12;
-    bombCount = 20;
-  } else {
+    bombCount = 24;
+  } else if (difficulty === 'hard') {
     boardSize = 16;
     bombCount = 40;
   }
