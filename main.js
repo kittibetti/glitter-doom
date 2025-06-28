@@ -21,7 +21,6 @@ function startGame(difficulty) {
   console.log("Játék indult ezzel a nehézséggel:", difficulty);
   menuEl.classList.add('hidden');
   boardEl.classList.remove('hidden');
-  // Itt kezdődne a pálya generálása stb...
   resultOverlay.classList.add('hidden');
   resultText.textContent = '';
   glitchAudio.pause();
@@ -128,7 +127,6 @@ function endGame(won) {
   resultText.textContent = won ? '🎉 Győzelem!' : '💀 LOOSER';
   resultOverlay.classList.remove('hidden');
 
-  // 💥 glitch villanás
   document.body.classList.add('glitch');
   setTimeout(() => document.body.classList.remove('glitch'), 1000);
 
@@ -142,6 +140,4 @@ function endGame(won) {
 function activateGlitchMode() {
   console.log("GlitchKitti™ mód aktiválva!");
   glitchAudio.play();
-}
-
 }
