@@ -113,7 +113,6 @@ function revealAdjacentSafeCells(index) {
     }
   }
 }
-
 function endGame(won) {
   gameOver = true;
 
@@ -130,12 +129,14 @@ function endGame(won) {
     resultSubtext.textContent = "Glitter Kitty has claimed your soul";
   }
 
+  // 💣 Itt mutatjuk meg az összes bombát
   cells.forEach(cell => {
     if (cell.dataset.bomb === "true") {
       cell.classList.add("bomb");
     }
   });
 }
+
 
 restartBtn.addEventListener("click", () => {
   resultOverlay.classList.add("hidden");
