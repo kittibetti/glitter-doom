@@ -48,6 +48,7 @@ function startGame(difficulty, glitch = false) {
   gameOver = false;
   boardEl.innerHTML = "";
   boardEl.style.gridTemplateColumns = `repeat(${boardSize}, 1fr)`;
+  boardEl.style.gridTemplateRows = `repeat(${boardSize}, 1fr)`;
 
   const bombPositions = new Set();
   while (bombPositions.size < bombCount) {
