@@ -44,6 +44,8 @@ function startGame(difficulty) {
     setTimeout(() => document.body.classList.remove("glitch"), 1500);
   }
 
+  console.log(`📐 Tábla: ${boardSize}x${boardSize}, 💣 bombák: ${bombCount}`);
+  }
   document.documentElement.style.setProperty('--board-size', boardSize);
 
   menuEl.classList.add("hidden");
@@ -72,9 +74,6 @@ function startGame(difficulty) {
     cells.push(cell);
 
     cell.addEventListener("click", () => revealCell(i));
-  }
-
-  console.log(`📐 Tábla: ${boardSize}x${boardSize}, 💣 bombák: ${bombCount}`);
 }
 
 function revealCell(index) {
