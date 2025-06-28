@@ -21,6 +21,47 @@ h1 {
   margin-top: 1.5rem;
   text-shadow: 0 0 10px #fff;
 }
+/* 🎥 Cím */
+h1 {
+  font-size: 2rem;
+  margin-top: 1.5rem;
+  text-shadow: 0 0 10px #fff;
+}
+
+/* 🌈 Pride Edition banner */
+.pride-banner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 1rem;
+  animation: fadeIn 1s ease-out;
+}
+
+.rainbow-deco {
+  font-size: 2rem;
+}
+
+.pride-text {
+  font-size: 1.8rem;
+  font-weight: bold;
+  background: linear-gradient(90deg, #ff0066, #ffcc00, #00ffcc, #3366ff, #cc33ff);
+  background-size: 400% 100%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: rainbowSlide 5s linear infinite;
+  text-shadow: 0 0 10px #fff;
+}
+
+@keyframes rainbowSlide {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 100% 50%; }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
 
 /* 🌟 Menü gombok */
 .menu-buttons {
