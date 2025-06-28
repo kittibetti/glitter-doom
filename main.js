@@ -1,9 +1,12 @@
-console.log("✅ main.js betöltve");
+// ✅ Glitter Doom: Kitty's Revenge – main.js
+
+console.log("✅ main.js loaded");
 
 const boardEl = document.getElementById("game-board");
 const menuEl = document.getElementById("main-menu");
 const resultOverlay = document.getElementById("result-overlay");
 const resultText = document.getElementById("result-text");
+const resultSubtext = document.getElementById("result-subtext");
 const restartBtn = document.getElementById("restart-button");
 
 let boardSize = 0;
@@ -11,43 +14,25 @@ let bombCount = 0;
 let cells = [];
 let gameOver = false;
 
-document.getElementById('easy').addEventListener('click', () => startGame("easy"));
-document.getElementById('medium').addEventListener('click', () => startGame("medium"));
-document.getElementById('hard').addEventListener('click', () => startGame("hard"));
-document.getElementById('glitchkitti').addEventListener('click', () => startGame("glitch"));
-restartBtn.addEventListener('click', () => {
-  resultOverlay.classList.add("hidden");
-  resultOverlay.classList.remove("show");
-  location.reload(); // vagy újraindíthatod a játékot JS-ből is, ha nem akarod reloadolni
-});
+const difficulties = {
+  easy: { size: 8, bombs: 10 },
+  medium: { size: 12, bombs: 24 },
+  hard: { size: 16, bombs: 40 },
+  glitch: { size: 20, bombs: 80 }
+};
 
 function startGame(difficulty) {
-  console.log("🎮 Játék indul:", difficulty);
-
-  // Beállítások
-  if (difficulty === "easy") {
-    boardSize = 8;
-    bombCount = 10;
-  } else if (difficulty === "medium") {
-    boardSize = 12;
-    bombCount = 24;
-  } else if (difficulty === "hard") {
-    boardSize = 16;
-    bombCount = 40;
-  } else if (difficulty === "glitch") {
-    boardSize = 20;
-    bombCount = 80;
-    document.body.classList.add("glitch");
-    setTimeout(() => document.body.classList.remove("glitch"), 1500);
-  }
+  const config = difficulties[difficulty] || difficulties.easy;
+  boardSize = config.size;
+  bombCount = config.bombs;
 
   document.documentElement.style.setProperty('--board-size', boardSize);
-  console.log(`📐 Tábla: ${boardSize}x${boardSize}, 💣 bombák: ${bombCount}`);
-
   menuEl.classList.add("hidden");
   boardEl.classList.remove("hidden");
   resultOverlay.classList.add("hidden");
+  resultOverlay.classList.remove("show");
   resultText.textContent = "";
+  resultSubtext.textContent = "";
 
   cells = [];
   gameOver = false;
@@ -131,17 +116,18 @@ function revealAdjacentSafeCells(index) {
 
 function endGame(won) {
   gameOver = true;
+
   resultOverlay.classList.remove("hidden");
   resultOverlay.classList.add("show");
 
   if (won) {
     resultText.textContent = "🎉 WINNER 🎉";
-    resultSubtext.textContent = "You survived the glitter apocalypse!";
     resultText.className = "winner-text";
+    resultSubtext.textContent = "You survived the glitter apocalypse!";
   } else {
     resultText.textContent = "💀 LOOSER 💀";
-    resultSubtext.textContent = "👑 Glitter Kitty has claimed your soul";
     resultText.className = "looser-text";
+    resultSubtext.textContent = "Glitter Kitty has claimed your soul";
   }
 
   cells.forEach(cell => {
@@ -150,3 +136,15 @@ function endGame(won) {
     }
   });
 }
+
+restartBtn.addEventListener("click", () => {
+  resultOverlay.classList.add("hidden");
+  resultOverlay.classList.remove("show");
+  menuEl.classList.remove("hidden");
+  boardEl.classList.add("hidden");
+});
+
+document.getElementById("easy").addEventListener("click", () => startGame("easy"));
+document.getElementById("medium").addEventListener("click", () => startGame("medium"));
+document.getElementById("hard").addEventListener("click", () => startGame("hard"));
+document.getElementById("glitchkitti").addEventListener("click", () => startGame("glitch"));
