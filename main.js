@@ -18,10 +18,10 @@ let cells = [];
 let gameOver = false;
 
 function startGame(difficulty) {
-  console.log(`🎮 Játék indul (${difficulty})`);
-
+  console.log("Játék indult ezzel a nehézséggel:", difficulty);
   menuEl.classList.add('hidden');
   boardEl.classList.remove('hidden');
+  // Itt kezdődne a pálya generálása stb...
   resultOverlay.classList.add('hidden');
   resultText.textContent = '';
   glitchAudio.pause();
@@ -140,7 +140,8 @@ function endGame(won) {
 }
 
 function activateGlitchMode() {
-  console.log("👾 Glitch mód aktiválva!");
-  startGame('hard');
+  console.log("GlitchKitti™ mód aktiválva!");
   glitchAudio.play();
+}
+
 }
