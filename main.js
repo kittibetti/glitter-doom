@@ -6,35 +6,37 @@ const resultOverlay = document.getElementById("result-overlay");
 const resultText = document.getElementById("result-text");
 const glitchAudio = document.getElementById("glitch-audio");
 
-document.getElementById('easy')?.addEventListener('click', () => startGame('easy'));
-document.getElementById('medium')?.addEventListener('click', () => startGame('medium'));
-document.getElementById('hard')?.addEventListener('click', () => startGame('hard'));
-document.getElementById('glitchkitti')?.addEventListener('click', () => activateGlitchMode());
-document.getElementById('restart-button')?.addEventListener('click', () => {
-  resultOverlay.classList.add('hidden');
-  boardEl.classList.add('hidden');
-  menuEl.classList.remove('hidden');
+const restartBtn = document.getElementById("restart-button");
+restartBtn.addEventListener("click", () => {
+  resultOverlay.classList.add("hidden");
+  menuEl.classList.remove("hidden");
+  boardEl.classList.add("hidden");
 });
+
+document.getElementById("easy")?.addEventListener("click", () => startGame("easy"));
+document.getElementById("medium")?.addEventListener("click", () => startGame("medium"));
+document.getElementById("hard")?.addEventListener("click", () => startGame("hard"));
+document.getElementById("glitchkitti")?.addEventListener("click", () => startGame("hard", true));
 
 let boardSize = 0;
 let bombCount = 0;
 let cells = [];
 let gameOver = false;
 
-function startGame(difficulty) {
-  console.log(`🎮 Játék indul: ${difficulty}`);
+function startGame(difficulty, glitch = false) {
+  console.log("🎮 Játék indul:", difficulty, glitch ? "(glitch mód)" : "");
 
-  menuEl.classList.add('hidden');
-  boardEl.classList.remove('hidden');
-  resultOverlay.classList.add('hidden');
-  resultText.textContent = '';
+  menuEl.classList.add("hidden");
+  boardEl.classList.remove("hidden");
+  resultOverlay.classList.add("hidden");
+  resultText.textContent = "";
   glitchAudio.pause();
   glitchAudio.currentTime = 0;
 
-  if (difficulty === 'easy') {
+  if (difficulty === "easy") {
     boardSize = 8;
     bombCount = 10;
-  } else if (difficulty === 'medium') {
+  } else if (difficulty === "medium") {
     boardSize = 12;
     bombCount = 24;
   } else {
@@ -44,7 +46,7 @@ function startGame(difficulty) {
 
   cells = [];
   gameOver = false;
-  boardEl.innerHTML = '';
+  boardEl.innerHTML = "";
   boardEl.style.gridTemplateColumns = `repeat(${boardSize}, 1fr)`;
 
   const bombPositions = new Set();
@@ -53,34 +55,38 @@ function startGame(difficulty) {
   }
 
   for (let i = 0; i < boardSize * boardSize; i++) {
-    const cell = document.createElement('div');
-    cell.classList.add('cell');
+    const cell = document.createElement("div");
+    cell.classList.add("cell");
     if (bombPositions.has(i)) {
-      cell.dataset.bomb = 'true';
+      cell.dataset.bomb = "true";
     }
     boardEl.appendChild(cell);
     cells.push(cell);
 
-    cell.addEventListener('click', () => revealCell(i));
+    cell.addEventListener("click", () => revealCell(i));
   }
 
-  console.log(`📐 Tábla: ${boardSize}x${boardSize}, 💣 bombák: ${bombCount}`);
+  if (glitch) {
+    document.body.classList.add("glitch");
+    glitchAudio.play();
+    setTimeout(() => document.body.classList.remove("glitch"), 1500);
+  }
 }
 
 function revealCell(index) {
   const cell = cells[index];
-  if (!cell || gameOver || cell.classList.contains('revealed')) return;
+  if (!cell || gameOver || cell.classList.contains("revealed")) return;
 
-  cell.classList.add('revealed');
+  cell.classList.add("revealed");
 
-  if (cell.dataset.bomb === 'true') {
-    cell.classList.add('bomb');
+  if (cell.dataset.bomb === "true") {
+    cell.classList.add("bomb");
     endGame(false);
   } else {
     const count = countAdjacentBombs(index);
     if (count > 0) {
       cell.textContent = count;
-      cell.classList.add('number');
+      cell.classList.add("number");
     } else {
       revealAdjacentSafeCells(index);
     }
@@ -99,7 +105,7 @@ function countAdjacentBombs(index) {
       const ny = y + dy;
       if (nx >= 0 && nx < boardSize && ny >= 0 && ny < boardSize) {
         const nIndex = ny * boardSize + nx;
-        if (cells[nIndex]?.dataset.bomb === 'true') {
+        if (cells[nIndex]?.dataset.bomb === "true") {
           count++;
         }
       }
@@ -119,7 +125,7 @@ function revealAdjacentSafeCells(index) {
       const ny = y + dy;
       if (nx >= 0 && nx < boardSize && ny >= 0 && ny < boardSize) {
         const nIndex = ny * boardSize + nx;
-        if (!cells[nIndex].classList.contains('revealed')) {
+        if (!cells[nIndex].classList.contains("revealed")) {
           revealCell(nIndex);
         }
       }
@@ -130,28 +136,22 @@ function revealAdjacentSafeCells(index) {
 function endGame(won) {
   gameOver = true;
 
-  resultText.textContent = won ? '🎉 WINNER 🎉' : '💥 LOOSER 💥';
-  resultOverlay.classList.remove('hidden');
+  resultText.textContent = won ? "🎉 WINNER 🎉" : "💥 LOOSER 💥";
+  resultOverlay.classList.remove("hidden");
 
   if (!won && glitchAudio) {
     glitchAudio.play();
   }
 
-  document.body.classList.add('glitch');
-  setTimeout(() => document.body.classList.remove('glitch'), 1000);
+  document.body.classList.add("glitch");
+  setTimeout(() => document.body.classList.remove("glitch"), 1000);
 
   cells.forEach((cell) => {
-    if (cell.dataset.bomb === 'true') {
-      cell.classList.add('bomb');
+    if (cell.dataset.bomb === "true") {
+      cell.classList.add("bomb");
     }
   });
 
-  menuEl.classList.remove('hidden');
-  boardEl.classList.add('hidden');
-}
-
-function activateGlitchMode() {
-  console.log("GlitchKitti™ mód aktiválva!");
-  startGame('hard');
-  glitchAudio.play();
+  boardEl.classList.add("hidden");
+  menuEl.classList.remove("hidden");
 }
