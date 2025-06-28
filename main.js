@@ -132,7 +132,9 @@ function revealAdjacentSafeCells(index) {
 function endGame(won) {
   gameOver = true;
 
-  resultText.textContent = won ? "🎉 WINNER 🎉" : "💥 LOOSER 💥";
+  resultText.innerHTML = won
+  ? "🎉 <strong>WINNER</strong> 🎉"
+  : '👑 <span class="glitter-kitty">GLITTER KITTY</span> 👑<br>has judged you unworthy.';
   resultOverlay.classList.add("show");
 
   document.body.classList.add("glitch");
