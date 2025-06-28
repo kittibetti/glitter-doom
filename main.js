@@ -123,9 +123,10 @@ function revealAdjacentSafeCells(index) {
 
 function endGame(won) {
   gameOver = true;
-  glitchAudio.play();
-  resultText.textContent = won ? '🎉 Győzelem!' : '💀 LOOSER';
-  resultOverlay.classList.remove('hidden');
+  const overlay = document.getElementById('result-overlay');
+  overlay.textContent = won ? '🎉 WINNER 🎉' : '💥 LOOSER 💥';
+  overlay.classList.remove('hidden'); // Most már megjelenítjük
+}
 
   document.body.classList.add('glitch');
   setTimeout(() => document.body.classList.remove('glitch'), 1000);
