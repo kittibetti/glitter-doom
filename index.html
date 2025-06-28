@@ -6,6 +6,60 @@
   <title>🎬 Glitter Doom: Kitty’s Revenge™</title>
   <link rel="stylesheet" href="style.css" />
   <link rel="icon" href="horror-kitty-bomb.png" type="image/png" />
+  <style>
+    body {
+      margin: 0;
+      font-family: "Comic Sans MS", cursive, sans-serif;
+      background: linear-gradient(45deg, #ff0066, #ff6600);
+      color: #300;
+      text-align: center;
+    }
+    .hidden {
+      display: none;
+    }
+    #main-menu, #result-overlay {
+      padding: 2rem;
+    }
+    #game-board {
+      display: grid;
+      gap: 2px;
+      margin: 1rem auto;
+      width: fit-content;
+    }
+    .cell {
+      width: 40px;
+      height: 40px;
+      background-color: #ffe6f0;
+      border: 1px solid #ccc;
+      cursor: pointer;
+      font-weight: bold;
+      font-size: 1.2rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .cell.revealed {
+      background-color: #fff;
+    }
+    .cell.bomb {
+      background-color: #ff3366;
+      background-image: url('horror-kitty-bomb.png');
+      background-size: cover;
+      background-position: center;
+    }
+    button {
+      margin: 0.5rem;
+      padding: 0.6rem 1.2rem;
+      font-size: 1rem;
+      border-radius: 10px;
+      border: none;
+      background-color: #ffccdd;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #ff99bb;
+    }
+  </style>
 </head>
 <body>
   <div id="main-menu">
