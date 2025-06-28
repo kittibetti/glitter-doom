@@ -8,7 +8,7 @@ const glitchAudio = document.getElementById("glitch-audio");
 
 const restartBtn = document.getElementById("restart-button");
 restartBtn.addEventListener("click", () => {
-  resultOverlay.classList.add("hidden");
+  resultOverlay.classList.remove("show");
   menuEl.classList.remove("hidden");
   boardEl.classList.add("hidden");
 });
@@ -28,7 +28,7 @@ function startGame(difficulty, glitch = false) {
 
   menuEl.classList.add("hidden");
   boardEl.classList.remove("hidden");
-  resultOverlay.classList.add("hidden");
+  resultOverlay.classList.remove("show");
   resultText.textContent = "";
   glitchAudio.pause();
   glitchAudio.currentTime = 0;
