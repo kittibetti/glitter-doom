@@ -6,32 +6,27 @@ const resultOverlay = document.getElementById("result-overlay");
 const resultText = document.getElementById("result-text");
 const restartBtn = document.getElementById("restart-button");
 
-restartBtn.addEventListener("click", () => {
-  resultOverlay.classList.remove("show");
-  menuEl.classList.remove("hidden");
-  boardEl.classList.add("hidden");
-    boardEl.innerHTML = "";
-  cells = [];
-  gameOver = false;
-});
-
 document.getElementById("easy")?.addEventListener("click", () => startGame("easy"));
 document.getElementById("medium")?.addEventListener("click", () => startGame("medium"));
 document.getElementById("hard")?.addEventListener("click", () => startGame("hard"));
-document.getElementById("glitchkitti")?.addEventListener("click", () => startGame("hard", true));
+document.getElementById("glitchkitti")?.addEventListener("click", () => startGame("glitch"));
+
+restartBtn.addEventListener("click", () => {
+  resultOverlay.classList.remove("show");
+  boardEl.classList.add("hidden");
+  menuEl.classList.remove("hidden");
+  boardEl.innerHTML = "";
+  cells = [];
+  gameOver = false;
+});
 
 let boardSize = 0;
 let bombCount = 0;
 let cells = [];
 let gameOver = false;
 
-function startGame(difficulty, glitch = false) {
-  console.log("🎮 Játék indul:", difficulty, glitch ? "(glitch mód)" : "");
-
-  menuEl.classList.add("hidden");
-  boardEl.classList.remove("hidden");
-  resultOverlay.classList.remove("show");
-  resultText.textContent = "";
+function startGame(difficulty) {
+  console.log("🎮 Játék indul:", difficulty);
 
   if (difficulty === "easy") {
     boardSize = 8;
@@ -39,14 +34,26 @@ function startGame(difficulty, glitch = false) {
   } else if (difficulty === "medium") {
     boardSize = 12;
     bombCount = 24;
-  } else {
+  } else if (difficulty === "hard") {
     boardSize = 16;
     bombCount = 40;
+  } else if (difficulty === "glitch") {
+    boardSize = 20;
+    bombCount = 80;
+    document.body.classList.add("glitch");
+    setTimeout(() => document.body.classList.remove("glitch"), 1500);
   }
+
+  document.documentElement.style.setProperty('--board-size', boardSize);
+
+  menuEl.classList.add("hidden");
+  boardEl.classList.remove("hidden");
+  resultOverlay.classList.remove("show");
+  resultText.textContent = "";
 
   cells = [];
   gameOver = false;
-  boardEl.innerHTML = "";
+  boardEl.innerHTML = '';
   boardEl.style.gridTemplateColumns = `repeat(${boardSize}, 1fr)`;
   boardEl.style.gridTemplateRows = `repeat(${boardSize}, 1fr)`;
 
@@ -67,10 +74,7 @@ function startGame(difficulty, glitch = false) {
     cell.addEventListener("click", () => revealCell(i));
   }
 
-  if (glitch) {
-    document.body.classList.add("glitch");
-    setTimeout(() => document.body.classList.remove("glitch"), 1500);
-  }
+  console.log(`📐 Tábla: ${boardSize}x${boardSize}, 💣 bombák: ${bombCount}`);
 }
 
 function revealCell(index) {
@@ -137,8 +141,9 @@ function endGame(won) {
   gameOver = true;
 
   resultText.innerHTML = won
-  ? "🎉 <strong>WINNER</strong> 🎉"
-  : '👑 <span class="glitter-kitty">GLITTER KITTY</span> 👑<br>has judged you unworthy.';
+    ? "🎉 <strong>WINNER</strong> 🎉"
+    : '👑 <span class="glitter-kitty">GLITTER KITTY</span> 👑<br>has judged you unworthy.';
+
   resultOverlay.classList.add("show");
 
   document.body.classList.add("glitch");
