@@ -138,9 +138,33 @@ button:hover {
   align-items: center;
   z-index: 100;
 }
-
 #result-overlay.show {
   display: flex;
+}
+
+#winner-text, #looser-text {
+  margin: 0;
+  text-align: center;
+}
+
+.winner-text {
+  font-size: 3rem;
+  color: limegreen;
+  text-shadow: 0 0 10px #0f0, 0 0 20px #fff;
+}
+
+.looser-text {
+  font-size: 3rem;
+  color: red;
+  text-shadow: 0 0 10px #ff0000, 0 0 30px #ff0000;
+  animation: shake 0.5s infinite;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  50% { transform: translateX(5px); }
+  75% { transform: translateX(-5px); }
 }
 
 #result-text {
