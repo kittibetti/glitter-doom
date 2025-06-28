@@ -12,8 +12,8 @@ document.getElementById('hard')?.addEventListener('click', () => startGame('hard
 document.getElementById('glitchkitti')?.addEventListener('click', () => activateGlitchMode());
 document.getElementById('restart-button')?.addEventListener('click', () => {
   resultOverlay.classList.add('hidden');
-  menuEl.style.display = 'flex';
-  boardEl.style.display = 'none';
+  menuEl.classList.remove('hidden');
+  boardEl.classList.add('hidden');
 });
 
 let boardSize = 0;
@@ -24,9 +24,12 @@ let gameOver = false;
 function startGame(difficulty) {
   console.log(`🎮 Játék indul: ${difficulty}`);
 
-  // Menü elrejtése
-  menuEl.style.display = 'none';
-  boardEl.style.display = 'grid';
+  menuEl.classList.add('hidden');
+  boardEl.classList.remove('hidden');
+  resultOverlay.classList.add('hidden');
+  resultText.textContent = '';
+  glitchAudio.pause();
+  glitchAudio.currentTime = 0;
 
   if (difficulty === 'easy') {
     boardSize = 8;
@@ -34,7 +37,7 @@ function startGame(difficulty) {
   } else if (difficulty === 'medium') {
     boardSize = 12;
     bombCount = 24;
-  } else if (difficulty === 'hard') {
+  } else {
     boardSize = 16;
     bombCount = 40;
   }
@@ -77,7 +80,7 @@ function revealCell(index) {
     const count = countAdjacentBombs(index);
     if (count > 0) {
       cell.textContent = count;
-      cell.classList.add('number'); // <<< új osztályt adunk hozzá
+      cell.classList.add('number');
     } else {
       revealAdjacentSafeCells(index);
     }
@@ -127,10 +130,9 @@ function revealAdjacentSafeCells(index) {
 function endGame(won) {
   gameOver = true;
 
-  resultOverlay.textContent = won ? '🎉 WINNER 🎉' : '💥 LOOSER 💥';
+  resultText.textContent = won ? '🎉 WINNER 🎉' : '💥 LOOSER 💥';
   resultOverlay.classList.remove('hidden');
 
-  // Glitch hang csak akkor, ha veszítettél
   if (!won && glitchAudio) {
     glitchAudio.play();
   }
@@ -138,19 +140,18 @@ function endGame(won) {
   document.body.classList.add('glitch');
   setTimeout(() => document.body.classList.remove('glitch'), 1000);
 
-  // Felfed minden bombát
   cells.forEach((cell) => {
     if (cell.dataset.bomb === 'true') {
       cell.classList.add('bomb');
     }
   });
 
-  // Menü újra megjelenik
-  menuEl.style.display = 'flex';
-  boardEl.style.display = 'none';
+  menuEl.classList.remove('hidden');
+  boardEl.classList.add('hidden');
 }
 
 function activateGlitchMode() {
   console.log("GlitchKitti™ mód aktiválva!");
-  if (glitchAudio) glitchAudio.play();
+  startGame('hard');
+  glitchAudio.play();
 }
