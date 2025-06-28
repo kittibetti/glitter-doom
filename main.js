@@ -12,8 +12,8 @@ document.getElementById('hard')?.addEventListener('click', () => startGame('hard
 document.getElementById('glitchkitti')?.addEventListener('click', () => activateGlitchMode());
 document.getElementById('restart-button')?.addEventListener('click', () => {
   resultOverlay.classList.add('hidden');
-  menuEl.classList.remove('hidden');
   boardEl.classList.add('hidden');
+  menuEl.classList.remove('hidden');
 });
 
 let boardSize = 0;
