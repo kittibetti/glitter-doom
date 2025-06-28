@@ -137,7 +137,7 @@ function endGame(won) {
   gameOver = true;
 
   resultText.textContent = won ? "🎉 WINNER 🎉" : "💥 LOOSER 💥";
-  resultOverlay.classList.remove("hidden");
+  resultOverlay.classList.add("show");
 
   if (!won && glitchAudio) {
     glitchAudio.play();
