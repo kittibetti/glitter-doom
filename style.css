@@ -106,6 +106,15 @@ button:hover {
   z-index: 100;
 }
 
+/* 🎯 Eredmény szöveg (pl. LOOSER vagy WINNER) */
+#result-text {
+  color: red;
+  font-size: 3rem;
+  text-shadow: 0 0 15px #fff;
+  margin: 0;
+}
+
+
 /* 🚫 Elrejtés */
 #result-overlay.show {
   display: flex;
