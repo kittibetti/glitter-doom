@@ -1,4 +1,4 @@
-/* 🌈 Pride színes, animált háttér */
+/* 🌈 Háttér - Pride stílusban */
 body {
   margin: 0;
   font-family: "Comic Sans MS", cursive;
@@ -15,73 +15,64 @@ body {
   100% { background-position: 0% 50%; }
 }
 
-/* 🎥 Cím */
+/* 🎬 Cím */
 h1 {
-  font-size: 2rem;
-  margin-top: 1.5rem;
-  text-shadow: 0 0 10px #fff;
-}
-/* 🎥 Cím */
-h1 {
-  font-size: 2rem;
-  margin-top: 1.5rem;
+  font-size: 2.5rem;
+  margin-top: 1.2rem;
   text-shadow: 0 0 10px #fff;
 }
 
-/* 🌈 Pride Edition banner */
+/* 🏳️‍🌈 Pride felirat */
 .pride-banner {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 1rem;
-  margin-top: 1rem;
-  animation: fadeIn 1s ease-out;
-}
-
-.rainbow-deco {
-  font-size: 2rem;
+  gap: 0.5rem;
+  font-size: 1.4rem;
+  margin-bottom: 0.8rem;
 }
 
 .pride-text {
-  font-size: 1.8rem;
   font-weight: bold;
-  background: linear-gradient(90deg, #ff0066, #ffcc00, #00ffcc, #3366ff, #cc33ff);
+  background: linear-gradient(90deg, #ff00cc, #ffcc00, #00ffff, #cc00ff, #ff00cc);
   background-size: 400% 100%;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  animation: rainbowSlide 5s linear infinite;
-  text-shadow: 0 0 10px #fff;
+  animation: rainbowGlow 5s linear infinite;
+  text-shadow: 0 0 4px #fff;
 }
 
-@keyframes rainbowSlide {
+@keyframes rainbowGlow {
   0% { background-position: 0% 50%; }
   100% { background-position: 100% 50%; }
 }
 
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(-10px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-/* 🌟 Menü gombok */
-.menu-buttons {
+/* 📋 Menü */
+#main-menu {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 1rem;
-  margin-top: 2rem;
+  padding: 2rem;
 }
 
+.menu-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+/* 🧲 Gombok */
 button {
-  padding: 0.7rem 1.5rem;
+  padding: 0.8rem 1.6rem;
   font-size: 1rem;
   border: none;
   border-radius: 12px;
-  background-color: rgba(255, 255, 255, 0.6);
+  background-color: rgba(255, 255, 255, 0.7);
   color: #300;
   cursor: pointer;
   transition: all 0.2s ease;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
 }
 
 button:hover {
@@ -89,30 +80,28 @@ button:hover {
   transform: scale(1.05);
 }
 
-/* 🚀 Játéktábla */
+/* 🧱 Játéktábla */
 #game-board {
   display: grid;
-  gap: 2px;
-  margin: 2rem auto;
-  width: 90vmin;
-  height: 90vmin;
-  grid-template-rows: repeat(auto-fill, 1fr); /* vagy JS-ből fix */
+  margin: 1.5rem auto;
+  width: fit-content;
+  max-width: 95vmin;
+  aspect-ratio: 1 / 1;
 }
 
+/* 🔳 Mezők */
 .cell {
-  aspect-ratio: 1 / 1;
-  width: 100%;
+  width: calc(95vmin / var(--board-size));
+  height: calc(95vmin / var(--board-size));
   background-color: #ffe6f0;
   border: 1px solid #ccc;
   font-weight: bold;
-  font-size: clamp(0.8rem, 2.5vmin, 1.4rem);
-  line-height: 1; /* <--- EZ FONTOS! */
+  font-size: 1.2rem;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  overflow: hidden; /* ne tudjon kitörni a szám */
-  text-align: center;
+  line-height: 1;
 }
 
 .cell.revealed {
@@ -121,11 +110,10 @@ button:hover {
 }
 
 .cell.number {
-  color: black;
-  font-size: 1.2rem;
+  color: #000;
+  font-size: 1.4rem;
   font-weight: bold;
   text-shadow: 0 0 2px #fff;
-  line-height: 1; /* extra biztosíték */
 }
 
 .cell.bomb {
@@ -144,7 +132,6 @@ button:hover {
   background: rgba(0, 0, 0, 0.7);
   color: red;
   font-size: 2rem;
-  text-shadow: 0 0 10px #fff;
   display: none;
   flex-direction: column;
   justify-content: center;
@@ -152,21 +139,28 @@ button:hover {
   z-index: 100;
 }
 
-/* 🎯 Eredmény szöveg (pl. LOOSER vagy WINNER) */
-#result-text {
-  color: red;
-  font-size: 3rem;
-  text-shadow: 0 0 15px #fff;
-  margin: 0;
-}
-
-
-/* 🚫 Elrejtés */
 #result-overlay.show {
   display: flex;
 }
 
-/* 🔧 Glitch effekt (előkészítve) */
+#result-text {
+  font-size: 3rem;
+  font-weight: bold;
+  background: linear-gradient(90deg, #ff66cc, #ffcc00, #66ff66, #3399ff, #ff66cc);
+  background-size: 300% 100%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: rainbowGlow 5s ease-in-out infinite;
+  text-shadow: 0 0 10px #fff;
+  margin-bottom: 1rem;
+}
+
+/* 🔁 Újra gomb az overlayen */
+#restart-button {
+  margin-top: 1rem;
+}
+
+/* 👾 Glitch effekt */
 .glitch {
   animation: glitchFlash 0.4s steps(2, end) infinite;
 }
@@ -175,18 +169,4 @@ button:hover {
   0% { filter: hue-rotate(0deg); }
   50% { filter: hue-rotate(180deg); }
   100% { filter: hue-rotate(0deg); }
-}
-.glitter-kitty {
-  font-size: 3rem;
-  background: linear-gradient(90deg, #ff00cc, #ffcc00, #00ffff, #cc00ff, #ff00cc);
-  background-size: 400% 100%;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  animation: rainbowGlow 4s linear infinite;
-  text-shadow: 0 0 5px #fff;
-}
-
-@keyframes rainbowGlow {
-  0% { background-position: 0% 50%; }
-  100% { background-position: 100% 50%; }
 }
