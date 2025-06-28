@@ -1,22 +1,20 @@
 <!DOCTYPE html>
-<html lang="hu">
+<html lang="hu" style="--board-size: 0;">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>🎥 Glitter Doom: Kitty’s Revenge™</title>
-
+  <title>🎬 Glitter Doom: Kitty’s Revenge™</title>
   <link rel="stylesheet" href="style.css" />
-  <link rel="icon" href="horror-kitty-bomb.png" type="image/png" />
 </head>
 <body>
   <!-- 🌟 Főmenü -->
   <div id="main-menu">
     <h1>🎬 Glitter Doom: Kitty’s Revenge™</h1>
-<div class="pride-banner">
-  <span class="rainbow-deco">🌈</span>
-  <span class="pride-text">Pride Edition</span>
-  <span class="rainbow-deco">🌈</span>
-</div>
+    <div class="pride-banner">
+      <span class="rainbow-deco">🌈</span>
+      <span class="pride-text">Pride Edition</span>
+      <span class="rainbow-deco">🌈</span>
+    </div>
     <p>Válassz nehézségi szintet, ha mersz:</p>
     <div class="menu-buttons">
       <button id="easy">Cuki</button>
@@ -26,18 +24,15 @@
     </div>
   </div>
 
-  <!-- 🚀 Játéktábla -->
+  <!-- 🧱 Játéktábla -->
   <div id="game-board" class="hidden"></div>
 
   <!-- 💥 Eredmény overlay -->
   <div id="result-overlay" class="hidden">
     <h2 id="result-text"></h2>
-    <button id="restart-button">Újra</button>
+    <button id="restart-button">Újra?</button>
   </div>
 
-  <!-- 🎵 Hangeffekt -->
-
-
-  <script src="main.js" defer></script>
+  <script src="main.js"></script>
 </body>
 </html>
