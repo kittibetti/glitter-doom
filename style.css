@@ -63,9 +63,10 @@ body {
 }
 
 .cell.number {
-  color: black;
-  font-size: 1.2rem;
+  color: black !important;
+  font-size: 1.4rem !important;
   font-weight: bold;
+  text-shadow: 0 0 3px #fff;
 }
 
 /* 💀 Overlay */
