@@ -4,7 +4,7 @@ const boardEl = document.getElementById("game-board");
 const menuEl = document.getElementById("main-menu");
 const resultOverlay = document.getElementById("result-overlay");
 const resultText = document.getElementById("result-text");
-const glitchAudio = document.getElementById("glitch-audio");
+//const glitchAudio = document.getElementById("glitch-audio");
 
 const restartBtn = document.getElementById("restart-button");
 restartBtn.addEventListener("click", () => {
@@ -140,7 +140,7 @@ function endGame(won) {
   resultOverlay.classList.add("show");
 
   if (!won && glitchAudio) {
-    glitchAudio.play();
+    //glitchAudio.play();
   }
 
   document.body.classList.add("glitch");
