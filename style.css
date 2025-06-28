@@ -1,4 +1,4 @@
-/* 🌈 Háttér - Pride stílusban */
+/* 🌈 Pride színes, animált háttér */
 body {
   margin: 0;
   font-family: "Comic Sans MS", cursive;
@@ -137,54 +137,48 @@ button:hover {
   justify-content: center;
   align-items: center;
   z-index: 100;
+  padding: 1rem;
 }
+
 #result-overlay.show {
   display: flex;
-}
-
-#winner-text, #looser-text {
-  margin: 0;
-  text-align: center;
-}
-
-.winner-text {
-  font-size: 3rem;
-  color: limegreen;
-  text-shadow: 0 0 10px #0f0, 0 0 20px #fff;
-}
-
-.looser-text {
-  font-size: 3rem;
-  color: red;
-  text-shadow: 0 0 10px #ff0000, 0 0 30px #ff0000;
-  animation: shake 0.5s infinite;
-}
-
-@keyframes shake {
-  0%, 100% { transform: translateX(0); }
-  25% { transform: translateX(-5px); }
-  50% { transform: translateX(5px); }
-  75% { transform: translateX(-5px); }
 }
 
 #result-text {
   font-size: 3rem;
   font-weight: bold;
-  background: linear-gradient(90deg, #ff66cc, #ffcc00, #66ff66, #3399ff, #ff66cc);
-  background-size: 300% 100%;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  animation: rainbowGlow 5s ease-in-out infinite;
   text-shadow: 0 0 10px #fff;
-  margin-bottom: 1rem;
+  margin: 0;
 }
 
-/* 🔁 Újra gomb az overlayen */
-#restart-button {
+#result-subtext {
+  font-size: 1.2rem;
   margin-top: 1rem;
+  color: white;
 }
 
-/* 👾 Glitch effekt */
+/* 💀 LOOSER stílus */
+.looser-text {
+  color: red;
+  text-shadow: 0 0 10px #ff0000, 0 0 30px #ff0000, 2px 2px 0 #000;
+  animation: shake 0.5s infinite;
+}
+
+/* 🦄 WINNER stílus */
+.winner-text {
+  color: limegreen;
+  text-shadow: 0 0 10px #0f0, 0 0 20px #fff;
+}
+
+@keyframes shake {
+  0% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  50% { transform: translateX(5px); }
+  75% { transform: translateX(-5px); }
+  100% { transform: translateX(0); }
+}
+
+/* 🔧 Glitch effekt (opcionális) */
 .glitch {
   animation: glitchFlash 0.4s steps(2, end) infinite;
 }
