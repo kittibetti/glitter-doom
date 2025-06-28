@@ -1,36 +1,40 @@
 <!DOCTYPE html>
-<html lang="hu" style="--board-size: 0;">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>🎬 Glitter Doom: Kitty’s Revenge™</title>
+  <title>🎮 Glitter Doom: Kitty’s Revenge™</title>
   <link rel="stylesheet" href="style.css" />
+  <style>
+    .hidden { display: none !important; }
+  </style>
 </head>
 <body>
-  <!-- 🌟 Főmenü -->
+  <!-- 🌟 Main Menu -->
   <div id="main-menu">
-    <h1>🎬 Glitter Doom: Kitty’s Revenge™</h1>
+    <h1>🎮 Glitter Doom: Kitty’s Revenge™</h1>
     <div class="pride-banner">
       <span class="rainbow-deco">🌈</span>
       <span class="pride-text">Pride Edition</span>
       <span class="rainbow-deco">🌈</span>
     </div>
-    <p>Válassz nehézségi szintet, ha mersz:</p>
+    <p>Choose your glittery doom level:</p>
     <div class="menu-buttons">
-      <button id="easy">Cuki</button>
-      <button id="medium">Cuki-de-félelmetes</button>
-      <button id="hard">Cuki-horror</button>
-      <button id="glitchkitti">GlitchKitti™ Mód</button>
+      <button id="easy">Cute</button>
+      <button id="medium">Cute-but-creepy</button>
+      <button id="hard">Cute-horror</button>
+      <button id="glitchkitti">GlitchKitti™ Mode</button>
     </div>
   </div>
 
-  <!-- 🧱 Játéktábla -->
+  <!-- 🧱 Game Board -->
   <div id="game-board" class="hidden"></div>
 
-  <!-- 💥 Eredmény overlay -->
-<h2 id="result-text"></h2>
-<p id="result-subtext"></p>
-<button id="restart-button">Újra</button>
+  <!-- 💥 Result Overlay -->
+  <div id="result-overlay" class="hidden">
+    <h2 id="result-text"></h2>
+    <p id="result-subtext"></p>
+    <button id="restart-button">Retry?</button>
   </div>
 
   <script src="main.js"></script>
