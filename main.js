@@ -77,6 +77,7 @@ function revealCell(index) {
     const count = countAdjacentBombs(index);
     if (count > 0) {
       cell.textContent = count;
+      cell.classList.add('number'); // <<< új osztályt adunk hozzá
     } else {
       revealAdjacentSafeCells(index);
     }
