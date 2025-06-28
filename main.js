@@ -10,6 +10,9 @@ restartBtn.addEventListener("click", () => {
   resultOverlay.classList.remove("show");
   menuEl.classList.remove("hidden");
   boardEl.classList.add("hidden");
+    boardEl.innerHTML = "";
+  cells = [];
+  gameOver = false;
 });
 
 document.getElementById("easy")?.addEventListener("click", () => startGame("easy"));
