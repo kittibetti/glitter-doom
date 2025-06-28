@@ -10,7 +10,11 @@ document.getElementById('easy')?.addEventListener('click', () => startGame('easy
 document.getElementById('medium')?.addEventListener('click', () => startGame('medium'));
 document.getElementById('hard')?.addEventListener('click', () => startGame('hard'));
 document.getElementById('glitchkitti')?.addEventListener('click', () => activateGlitchMode());
-document.getElementById('restart-button')?.addEventListener('click', () => location.reload());
+document.getElementById('restart')?.addEventListener('click', () => {
+  resultOverlay.classList.add('hidden');
+  menuEl.style.display = 'flex';
+  boardEl.style.display = 'none';
+});
 
 let boardSize = 0;
 let bombCount = 0;
@@ -24,7 +28,6 @@ function startGame(difficulty) {
   menuEl.style.display = 'none';
   boardEl.style.display = 'grid';
 
-  // Nehézség alapján méret és bomba mennyiség
   if (difficulty === 'easy') {
     boardSize = 8;
     bombCount = 10;
@@ -122,21 +125,31 @@ function revealAdjacentSafeCells(index) {
 
 function endGame(won) {
   gameOver = true;
-  const overlay = document.getElementById('result-overlay');
-  overlay.textContent = won ? '🎉 WINNER 🎉' : '💥 LOOSER 💥';
-  overlay.classList.remove('hidden'); // Most már megjelenítjük
+
+  resultOverlay.textContent = won ? '🎉 WINNER 🎉' : '💥 LOOSER 💥';
+  resultOverlay.classList.remove('hidden');
+
+  // Glitch hang csak akkor, ha veszítettél
+  if (!won && glitchAudio) {
+    glitchAudio.play();
+  }
 
   document.body.classList.add('glitch');
   setTimeout(() => document.body.classList.remove('glitch'), 1000);
 
+  // Felfed minden bombát
   cells.forEach((cell) => {
     if (cell.dataset.bomb === 'true') {
       cell.classList.add('bomb');
     }
   });
+
+  // Menü újra megjelenik
+  menuEl.style.display = 'flex';
+  boardEl.style.display = 'none';
 }
 
 function activateGlitchMode() {
   console.log("GlitchKitti™ mód aktiválva!");
-  glitchAudio.play();
+  if (glitchAudio) glitchAudio.play();
 }
