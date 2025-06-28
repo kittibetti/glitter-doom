@@ -10,7 +10,7 @@ document.getElementById('easy')?.addEventListener('click', () => startGame('easy
 document.getElementById('medium')?.addEventListener('click', () => startGame('medium'));
 document.getElementById('hard')?.addEventListener('click', () => startGame('hard'));
 document.getElementById('glitchkitti')?.addEventListener('click', () => activateGlitchMode());
-document.getElementById('restart')?.addEventListener('click', () => {
+document.getElementById('restart-button')?.addEventListener('click', () => {
   resultOverlay.classList.add('hidden');
   menuEl.style.display = 'flex';
   boardEl.style.display = 'none';
