@@ -96,6 +96,7 @@ button:hover {
   margin: 2rem auto;
   width: 90vmin;
   height: 90vmin;
+  grid-template-rows: repeat(auto-fill, 1fr); /* vagy JS-ből fix */
 }
 
 .cell {
@@ -105,10 +106,13 @@ button:hover {
   border: 1px solid #ccc;
   font-weight: bold;
   font-size: clamp(0.8rem, 2.5vmin, 1.4rem);
+  line-height: 1; /* <--- EZ FONTOS! */
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
+  overflow: hidden; /* ne tudjon kitörni a szám */
+  text-align: center;
 }
 
 .cell.revealed {
@@ -118,9 +122,10 @@ button:hover {
 
 .cell.number {
   color: black;
-  font-size: 1.4rem;
+  font-size: 1.2rem;
   font-weight: bold;
   text-shadow: 0 0 2px #fff;
+  line-height: 1; /* extra biztosíték */
 }
 
 .cell.bomb {
