@@ -143,7 +143,7 @@ function endGame(won) {
 cells.forEach((cell) => {
   if (cell.dataset.bomb === 'true') {
     cell.classList.add('bomb');
-    cell.style.backgroundImage = "url('hello-kitty-bomb.png')";
+    cell.style.backgroundImage = "url('horror-kitty-bomb.png')";
     cell.style.backgroundSize = "cover";
     cell.style.backgroundPosition = "center";
   }
