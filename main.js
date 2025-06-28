@@ -15,7 +15,11 @@ document.getElementById('easy').addEventListener('click', () => startGame("easy"
 document.getElementById('medium').addEventListener('click', () => startGame("medium"));
 document.getElementById('hard').addEventListener('click', () => startGame("hard"));
 document.getElementById('glitchkitti').addEventListener('click', () => startGame("glitch"));
-restartBtn.addEventListener('click', () => location.reload());
+restartBtn.addEventListener('click', () => {
+  resultOverlay.classList.add("hidden");
+  resultOverlay.classList.remove("show");
+  location.reload(); // vagy újraindíthatod a játékot JS-ből is, ha nem akarod reloadolni
+});
 
 function startGame(difficulty) {
   console.log("🎮 Játék indul:", difficulty);
@@ -143,10 +147,6 @@ function endGame(won) {
   cells.forEach(cell => {
     if (cell.dataset.bomb === "true") {
       cell.classList.add("bomb");
-    }
-  });
-}
-
     }
   });
 }
