@@ -128,12 +128,25 @@ function revealAdjacentSafeCells(index) {
 function endGame(won) {
   gameOver = true;
   resultOverlay.classList.remove("hidden");
-  resultText.textContent = won ? "🎉 WINNER 🎉" : "🌈 Glitter Kitty 🌈";
-  resultText.classList.add("glitter-kitty");
+  resultOverlay.classList.add("show");
+
+  if (won) {
+    resultText.textContent = "🎉 WINNER 🎉";
+    resultSubtext.textContent = "You survived the glitter apocalypse!";
+    resultText.className = "winner-text";
+  } else {
+    resultText.textContent = "💀 LOOSER 💀";
+    resultSubtext.textContent = "👑 Glitter Kitty has claimed your soul";
+    resultText.className = "looser-text";
+  }
 
   cells.forEach(cell => {
     if (cell.dataset.bomb === "true") {
       cell.classList.add("bomb");
+    }
+  });
+}
+
     }
   });
 }
