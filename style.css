@@ -63,11 +63,13 @@ button:hover {
   background-color: #ffe6f0;
   border: 1px solid #ccc;
   font-weight: bold;
-  font-size: 1.5vmin; /* Automatikus méret */
+  font-size: 1.5vmin;
+  line-height: 1; /* 🔧 Ez gátolja a sortávolság-növekedést */
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
+  overflow: hidden; /* biztos ami biztos */
 }
 
 .cell.revealed {
