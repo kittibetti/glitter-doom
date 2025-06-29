@@ -211,10 +211,10 @@ restartBtn.addEventListener("click", () => {
   }
 });
 
-// Menü gombok
+// Menügombok kattintáskezelői
 document.addEventListener('DOMContentLoaded', () => {
-  const menuItens = ['sugarcute', 'easy', 'medium', 'hard', 'glitchkitti'];
-  menuItens.forEach(id => {
+  const menuItems = ['sugarcute', 'easy', 'medium', 'hard', 'glitchkitti'];
+  menuItems.forEach(id => {
     const btn = document.getElementById(id);
     if (!btn) {
       console.error(`❌ Nem található a ${id} gomb!`);
@@ -224,7 +224,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 
-// Automatikus Sugarcute stílus betöltés
+// Automatikusan Sugarcute stílus betöltése a háttérhez
 window.addEventListener('load', () => {
   document.body.classList.add('sugarcute');
 });
