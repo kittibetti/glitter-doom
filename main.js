@@ -15,7 +15,7 @@ let cells = [];
 let gameOver = false;
 
 const difficulties = {
-  sugarcute: { size: 6, bombs: 3 }, // 💗 ÚJ!
+  sugarcute: { size: 6, bombs: 2 }, // 💗 ÚJ!
   easy: { size: 8, bombs: 10 },
   medium: { size: 12, bombs: 24 },
   hard: { size: 16, bombs: 40 },
