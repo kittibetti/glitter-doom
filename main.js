@@ -15,7 +15,7 @@ let cells = [];
 let gameOver = false;
 
 const difficulties = {
-  sugarcute: { size: 6, bombs: 2 }, // 💗 ÚJ!
+  sugarcute: { size: 6, bombs: 2 },
   easy: { size: 8, bombs: 10 },
   medium: { size: 12, bombs: 24 },
   hard: { size: 16, bombs: 40 },
@@ -59,9 +59,12 @@ function startGame(difficulty) {
     }
     boardEl.appendChild(cell);
     cells.push(cell);
-   cell.addEventListener('click', () => {
-  if (cell.classList.contains('revealed')) {
-    return; // már feltárt mező, nem csinálunk semmit
+
+    cell.addEventListener('click', () => {
+      if (!cell.classList.contains("revealed") && !gameOver) {
+        revealCell(i);
+      }
+    });
   }
 }
 
@@ -82,7 +85,7 @@ function revealCell(index) {
     } else {
       revealAdjacentSafeCells(index);
     }
-    checkWinCondition();  // Csak itt kell meghívni, ha nem bomba
+    checkWinCondition();
   }
 }
 
@@ -90,8 +93,7 @@ function checkWinCondition() {
   if (gameOver) return;
 
   const revealedCount = cells.filter(cell => cell.classList.contains("revealed")).length;
-  const totalCells = boardSize * boardSize;
-  const safeCells = totalCells - bombCount;
+  const safeCells = boardSize * boardSize - bombCount;
 
   if (revealedCount === safeCells) {
     endGame(true);
@@ -143,30 +145,19 @@ function endGame(won) {
   resultOverlay.classList.add("show");
 
   if (won) {
-    if (boardSize === 6 && bombCount === 3) {
-      // 🎀 SugarCute nyerés
-      resultText.textContent = "🎀 YOU'RE ADORABLE 🎀";
-      resultText.className = "winner-text";
-      resultSubtext.textContent = "You mastered the SugarCute™ world!";
-    } else {
-      resultText.textContent = "🎉 WINNER 🎉";
-      resultText.className = "winner-text";
-      resultSubtext.textContent = "You survived the glitter apocalypse!";
-    }
+    resultText.textContent = (boardSize === 6 && bombCount === 2) ? "🎀 YOU'RE ADORABLE 🎀" : "🎉 WINNER 🎉";
+    resultText.className = "winner-text";
+    resultSubtext.textContent = (boardSize === 6 && bombCount === 2)
+      ? "You mastered the SugarCute™ world!"
+      : "You survived the glitter apocalypse!";
   } else {
-    if (boardSize === 6 && bombCount === 2) {
-      // 💔 SugarCute vesztés
-      resultText.textContent = "😿 OOPSIE! 😿";
-      resultText.className = "looser-text";
-      resultSubtext.textContent = "Even the cutest worlds have traps!";
-    } else {
-      resultText.textContent = "💀 LOOSER 💀";
-      resultText.className = "looser-text";
-      resultSubtext.textContent = "Glitter Kitty has claimed your soul";
-    }
+    resultText.textContent = (boardSize === 6 && bombCount === 2) ? "😿 OOPSIE! 😿" : "💀 LOOSER 💀";
+    resultText.className = "looser-text";
+    resultSubtext.textContent = (boardSize === 6 && bombCount === 2)
+      ? "Even the cutest worlds have traps!"
+      : "Glitter Kitty has claimed your soul";
   }
 
-  // 💣 Mutatjuk az összes bombát VESZTÉS esetén vagy játék végekor
   cells.forEach(cell => {
     if (cell.dataset.bomb === "true") {
       cell.classList.add("bomb");
@@ -177,7 +168,6 @@ function endGame(won) {
   if (fullBomb) {
     fullBomb.classList.remove("hidden");
     fullBomb.style.display = "block";
-
     setTimeout(() => {
       fullBomb.classList.add("hidden");
       fullBomb.style.display = "none";
@@ -185,14 +175,7 @@ function endGame(won) {
   }
 }
 
-
-  // 💣 mutatjuk az összes bombát
-  cells.forEach(cell => {
-    if (cell.dataset.bomb === "true") {
-      cell.classList.add("bomb");
-   }    
-  });
-
+// Újrajáték
 restartBtn.addEventListener("click", () => {
   resultOverlay.classList.add("hidden");
   resultOverlay.classList.remove("show");
@@ -206,17 +189,7 @@ restartBtn.addEventListener("click", () => {
   }
 });
 
-document.getElementById("sugarcute").addEventListener("click", () => startGame("sugarcute"));
-document.getElementById("easy").addEventListener("click", () => startGame("easy"));
-document.getElementById("medium").addEventListener("click", () => startGame("medium"));
-document.getElementById("hard").addEventListener("click", () => startGame("hard"));
-document.getElementById("glitchkitti").addEventListener("click", () => startGame("glitch"));
-
-// Amikor az oldal betöltődik, aktiváljuk a sugarcute módot
-window.addEventListener('load', () => {
-  document.body.classList.add('sugarcute');
-});
-// ⬇️ EZT ILLESZD BE A main.js FÁJL ALJÁRA ⬇️
+// Menü gombok
 document.addEventListener('DOMContentLoaded', () => {
   const menuItens = ['sugarcute', 'easy', 'medium', 'hard', 'glitchkitti'];
   menuItens.forEach(id => {
@@ -227,4 +200,9 @@ document.addEventListener('DOMContentLoaded', () => {
       btn.addEventListener('click', () => startGame(id === 'glitchkitti' ? 'glitch' : id));
     }
   });
+});
 
+// Automatikus Sugarcute stílus betöltés
+window.addEventListener('load', () => {
+  document.body.classList.add('sugarcute');
+});
