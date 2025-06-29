@@ -127,41 +127,49 @@ function endGame(won) {
   resultOverlay.classList.remove("hidden");
   resultOverlay.classList.add("show");
 
-if (won) {
-  if (boardSize === 6 && bombCount === 3) {
-    // 🎀 SugarCute nyerés
-    resultText.textContent = "🎀 YOU'RE ADORABLE 🎀";
-    resultText.className = "winner-text";
-    resultSubtext.textContent = "You mastered the SugarCute™ world!";
+  if (won) {
+    if (boardSize === 6 && bombCount === 3) {
+      // 🎀 SugarCute nyerés
+      resultText.textContent = "🎀 YOU'RE ADORABLE 🎀";
+      resultText.className = "winner-text";
+      resultSubtext.textContent = "You mastered the SugarCute™ world!";
+    } else {
+      resultText.textContent = "🎉 WINNER 🎉";
+      resultText.className = "winner-text";
+      resultSubtext.textContent = "You survived the glitter apocalypse!";
+    }
   } else {
-    resultText.textContent = "🎉 WINNER 🎉";
-    resultText.className = "winner-text";
-    resultSubtext.textContent = "You survived the glitter apocalypse!";
+    if (boardSize === 6 && bombCount === 3) {
+      // 💔 SugarCute vesztés
+      resultText.textContent = "😿 OOPSIE! 😿";
+      resultText.className = "looser-text";
+      resultSubtext.textContent = "Even the cutest worlds have traps!";
+    } else {
+      resultText.textContent = "💀 LOOSER 💀";
+      resultText.className = "looser-text";
+      resultSubtext.textContent = "Glitter Kitty has claimed your soul";
+    }
   }
-} else {
-  if (boardSize === 6 && bombCount === 3) {
-    // 💔 SugarCute vesztés
-    resultText.textContent = "😿 OOPSIE! 😿";
-    resultText.className = "looser-text";
-    resultSubtext.textContent = "Even the cutest worlds have traps!";
-  } else {
-    resultText.textContent = "💀 LOOSER 💀";
-    resultText.className = "looser-text";
-    resultSubtext.textContent = "Glitter Kitty has claimed your soul";
+
+  // 💣 Mutatjuk az összes bombát VESZTÉS esetén vagy játék végekor
+  cells.forEach(cell => {
+    if (cell.dataset.bomb === "true") {
+      cell.classList.add("bomb");
+    }
+  });
+
+  const fullBomb = document.getElementById("full-bomb");
+  if (fullBomb) {
+    fullBomb.classList.remove("hidden");
+    fullBomb.style.display = "block";
+
+    setTimeout(() => {
+      fullBomb.classList.add("hidden");
+      fullBomb.style.display = "none";
+    }, 2500);
   }
 }
 
-    const fullBomb = document.getElementById("full-bomb");
-    if (fullBomb) {
-      fullBomb.classList.remove("hidden");
-      fullBomb.style.display = "block";
-
-      setTimeout(() => {
-        fullBomb.classList.add("hidden");
-        fullBomb.style.display = "none";
-      }, 2500);
-    }
-  }
 
   // 💣 mutatjuk az összes bombát
   cells.forEach(cell => {
