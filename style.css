@@ -15,11 +15,41 @@ body {
   100% { background-position: 0% 50%; }
 }
 
-/* 🎬 Cím */
-h1 {
-  font-size: 2.5rem;
+/* 🎬 Retro Horror Főcím */
+#main-title {
+  font-family: 'Creepster', 'Press Start 2P', cursive;
+  font-size: 3rem;
+  color: #ff003c;
+  text-shadow:
+    0 0 2px #000,
+    0 0 4px #7f0000,
+    0 0 6px #ff003c,
+    2px 2px 0 #000,
+    -2px -2px 0 #ff0066;
+  animation: horrorPulse 3s infinite, glitchFlicker 0.8s infinite;
+  text-align: center;
   margin-top: 1.2rem;
-  text-shadow: 0 0 10px #fff;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+}
+
+@keyframes horrorPulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.05);
+    opacity: 0.85;
+  }
+}
+
+@keyframes glitchFlicker {
+  0% { text-shadow: 2px 2px #ff003c; }
+  25% { text-shadow: -2px -2px #ff0055; }
+  50% { text-shadow: 2px -2px #ff0022; }
+  75% { text-shadow: -2px 2px #ff003c; }
+  100% { text-shadow: 0 0 2px #ff0000; }
 }
 
 /* 🏳️‍🌈 Pride felirat */
