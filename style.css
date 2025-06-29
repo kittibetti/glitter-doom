@@ -9,6 +9,14 @@ body {
   color: #300;
 }
 
+/* Sugarcute mód cuki, pasztell, lágyabb háttér */
+body.sugarcute {
+  background: linear-gradient(135deg, #ffb6c1, #ffe4e1, #fffacd, #e0ffff, #dda0dd);
+  background-size: 600% 600%;
+  animation: gradientFlow 20s ease infinite;
+  color: #a05070; /* Lágyabb, cukibb szín a szövegnek */
+}
+
 @keyframes gradientFlow {
   0% { background-position: 0% 50%; }
   50% { background-position: 100% 50%; }
