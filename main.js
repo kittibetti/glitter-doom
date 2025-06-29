@@ -211,7 +211,6 @@ restartBtn.addEventListener("click", () => {
     fullBomb.style.display = "none";
   }
 });
-}
 // 🧩 Menügombok kattintáskezelői
 document.addEventListener('DOMContentLoaded', () => {
   const menuItems = ['sugarcute', 'easy', 'medium', 'hard', 'glitchkitti'];
