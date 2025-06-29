@@ -59,7 +59,9 @@ function startGame(difficulty) {
     }
     boardEl.appendChild(cell);
     cells.push(cell);
-    cell.addEventListener("click", () => revealCell(i));
+   cell.addEventListener('click', () => {
+  if (cell.classList.contains('revealed')) {
+    return; // már feltárt mező, nem csinálunk semmit
   }
 }
 
