@@ -240,3 +240,43 @@ body.sugarcute .cell:hover {
 body.sugarcute {
   color: #a05070; /* Lágyabb, cukibb szín a szövegnek */
 }
+/* --- Extrább Restart Gomb Stílus --- */
+#restart-button.glitch-button {
+  background: linear-gradient(45deg, #ff0055, #ff55aa, #ff00ff);
+  background-size: 200% 200%;
+  color: #fff;
+  font-weight: bold;
+  font-size: 1.1rem;
+  box-shadow: 0 0 10px #ff00ff;
+  border: 3px solid #ff0055;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  position: relative;
+  overflow: hidden;
+}
+
+#restart-button.glitch-button:hover {
+  animation: glitch 1.2s infinite;
+  background-position: 100% 50%;
+  box-shadow: 0 0 20px #ff55aa, 0 0 30px #ff00ff;
+  transform: scale(1.1);
+}
+
+@keyframes glitch {
+  0%, 100% {
+    text-shadow: 2px 0 #ff0055, -2px 0 #ff00ff;
+  }
+  20% {
+    text-shadow: -2px 0 #ff0055, 2px 0 #ff00ff;
+  }
+  40% {
+    text-shadow: 2px 2px #ff00ff, -2px -2px #ff0055;
+  }
+  60% {
+    text-shadow: -2px 2px #ff0055, 2px -2px #ff00ff;
+  }
+  80% {
+    text-shadow: 2px 0 #ff0055, -2px 0 #ff00ff;
+  }
+}
