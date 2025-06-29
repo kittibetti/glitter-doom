@@ -43,10 +43,9 @@ function startGame(difficulty) {
   const bombPositions = new Set();
   while (bombPositions.size < bombCount) {
     bombPositions.add(Math.floor(Math.random() * boardSize * boardSize));
-
+ }
     const fullBomb = document.getElementById("full-bomb");
 if (fullBomb) fullBomb.style.display = "none";
-  }
 
   for (let i = 0; i < boardSize * boardSize; i++) {
     const cell = document.createElement("div");
