@@ -43,9 +43,7 @@ function startGame(difficulty) {
   const bombPositions = new Set();
   while (bombPositions.size < bombCount) {
     bombPositions.add(Math.floor(Math.random() * boardSize * boardSize));
- }
-    const fullBomb = document.getElementById("full-bomb");
-if (fullBomb) fullBomb.style.display = "none";
+  }
 
   for (let i = 0; i < boardSize * boardSize; i++) {
     const cell = document.createElement("div");
@@ -116,6 +114,7 @@ function revealAdjacentSafeCells(index) {
     }
   }
 }
+
 function endGame(won) {
   gameOver = true;
 
@@ -131,14 +130,19 @@ function endGame(won) {
     resultText.className = "looser-text";
     resultSubtext.textContent = "Glitter Kitty has claimed your soul";
 
-   const fullBomb = document.getElementById("full-bomb");
-  fullBomb.style.display = "block";
+    const fullBomb = document.getElementById("full-bomb");
+    fullBomb.style.display = "block";
+  }
 
-  // 💣 Itt mutatjuk meg az összes bombát
+  // 💣 Megmutatjuk az összes bombát
   cells.forEach(cell => {
     if (cell.dataset.bomb === "true") {
-      cell.classList.add("bomb")
+      cell.classList.add("bomb");
+    }
+  });
+}
 
+// 🔁 Újraindítás gomb
 restartBtn.addEventListener("click", () => {
   resultOverlay.classList.add("hidden");
   resultOverlay.classList.remove("show");
@@ -146,8 +150,8 @@ restartBtn.addEventListener("click", () => {
   boardEl.classList.add("hidden");
 });
 
+// 📲 Menü gombok eseménykezelők
 document.getElementById("easy").addEventListener("click", () => startGame("easy"));
 document.getElementById("medium").addEventListener("click", () => startGame("medium"));
 document.getElementById("hard").addEventListener("click", () => startGame("hard"));
 document.getElementById("glitchkitti").addEventListener("click", () => startGame("glitch"));
-});
