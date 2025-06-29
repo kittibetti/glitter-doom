@@ -139,7 +139,7 @@ function endGame(won) {
       resultSubtext.textContent = "You survived the glitter apocalypse!";
     }
   } else {
-    if (boardSize === 6 && bombCount === 3) {
+    if (boardSize === 6 && bombCount === 2) {
       // 💔 SugarCute vesztés
       resultText.textContent = "😿 OOPSIE! 😿";
       resultText.className = "looser-text";
