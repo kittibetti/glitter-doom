@@ -137,8 +137,7 @@ function endGame(won) {
   // 💣 Itt mutatjuk meg az összes bombát
   cells.forEach(cell => {
     if (cell.dataset.bomb === "true") {
-      cell.classList.add("bomb");
-  }
+      cell.classList.add("bomb")
 
 restartBtn.addEventListener("click", () => {
   resultOverlay.classList.add("hidden");
