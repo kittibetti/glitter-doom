@@ -212,12 +212,13 @@ button:hover {
   30% { opacity: 1; transform: scale(1); }
   100% { opacity: 0; transform: scale(0.9); }
 }
-/* Csak a mezők háttérszíne változzon cukibbra sugarcute módban */
-body.sugarcute .cell {
-  background-color: #fff0f5;  /* halvány, pasztell rózsaszín */
-  border-color: #ffb6c1;
-  box-shadow: 0 0 8px #ff69b4 inset;
-  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+/* Sugarcute módban a már feltárt mezők lágy színnel és kattintás tiltással */
+body.sugarcute .cell.revealed {
+  background-color: #ffe4e1;  /* halvány rózsaszín */
+  color: #a05070;             /* cukibb szín */
+  cursor: default;            /* nem kattintható */
+  pointer-events: none;       /* kattintás tiltás */
+  box-shadow: none;           /* ha van árnyék, eltüntetjük */
 }
 
 /* Cuki hover effekt sugarcute módban */
