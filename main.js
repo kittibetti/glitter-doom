@@ -196,6 +196,7 @@ if (!won) {
     }, 2500);
   }
 }
+} 
 
 // 🔁 Újrajáték gomb eseménykezelője
 restartBtn.addEventListener("click", () => {
@@ -228,3 +229,4 @@ document.addEventListener('DOMContentLoaded', () => {
 window.addEventListener('load', () => {
   document.body.classList.add('sugarcute');
 });
+
