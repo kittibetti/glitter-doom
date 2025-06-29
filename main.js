@@ -81,6 +81,20 @@ function revealCell(index) {
       revealAdjacentSafeCells(index);
     }
   }
+  checkWinCondition();
+  function checkWinCondition() {
+  // Ha már vége a játéknak, nem kell tovább ellenőrizni
+  if (gameOver) return;
+
+  // Megszámoljuk, hány cella van felfedve
+  const revealedCount = cells.filter(cell => cell.classList.contains("revealed")).length;
+  const totalCells = boardSize * boardSize;
+  const safeCells = totalCells - bombCount;
+
+  if (revealedCount === safeCells) {
+    // Minden nem bomba felfedve – nyert a játékos
+    endGame(true);
+  }
 }
 
 function countAdjacentBombs(index) {
