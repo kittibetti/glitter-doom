@@ -15,6 +15,7 @@ let cells = [];
 let gameOver = false;
 
 const difficulties = {
+  sugarcute: { size: 6, bombs: 3 }, // 💗 ÚJ!
   easy: { size: 8, bombs: 10 },
   medium: { size: 12, bombs: 24 },
   hard: { size: 16, bombs: 40 },
@@ -126,14 +127,29 @@ function endGame(won) {
   resultOverlay.classList.remove("hidden");
   resultOverlay.classList.add("show");
 
-  if (won) {
+if (won) {
+  if (boardSize === 6 && bombCount === 3) {
+    // 🎀 SugarCute nyerés
+    resultText.textContent = "🎀 YOU'RE ADORABLE 🎀";
+    resultText.className = "winner-text";
+    resultSubtext.textContent = "You mastered the SugarCute™ world!";
+  } else {
     resultText.textContent = "🎉 WINNER 🎉";
     resultText.className = "winner-text";
     resultSubtext.textContent = "You survived the glitter apocalypse!";
+  }
+} else {
+  if (boardSize === 6 && bombCount === 3) {
+    // 💔 SugarCute vesztés
+    resultText.textContent = "😿 OOPSIE! 😿";
+    resultText.className = "looser-text";
+    resultSubtext.textContent = "Even the cutest worlds have traps!";
   } else {
     resultText.textContent = "💀 LOOSER 💀";
     resultText.className = "looser-text";
     resultSubtext.textContent = "Glitter Kitty has claimed your soul";
+  }
+}
 
     const fullBomb = document.getElementById("full-bomb");
     if (fullBomb) {
@@ -168,6 +184,7 @@ restartBtn.addEventListener("click", () => {
   }
 });
 
+document.getElementById("sugarcute").addEventListener("click", () => startGame("sugarcute"));
 document.getElementById("easy").addEventListener("click", () => startGame("easy"));
 document.getElementById("medium").addEventListener("click", () => startGame("medium"));
 document.getElementById("hard").addEventListener("click", () => startGame("hard"));
