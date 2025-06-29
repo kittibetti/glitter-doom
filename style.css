@@ -192,13 +192,19 @@ button:hover {
   position: fixed;
   top: 0;
   left: 0;
-  width: 100vw;
-  height: 100vh;
-  object-fit: cover;
+  max-width: 100vw;
+  max-height: 100vh;
+  width: auto;
+  height: auto;
   z-index: 999;
   display: none;
   pointer-events: none;
-  animation: bombFlash 1.5s ease-in-out;
+  margin: auto;
+  inset: 0;
+  animation: bombFlash 2s ease-in-out;
+
+   /* 🌑 Glitchy horror fénykezelés */
+  filter: brightness(1.2) contrast(1.1) saturate(1.3);
 }
 
 @keyframes bombFlash {
