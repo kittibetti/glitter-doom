@@ -167,6 +167,7 @@ if (won) {
   cells.forEach(cell => {
     if (cell.dataset.bomb === "true") {
       cell.classList.add("bomb");
+   }    
   });
 
 restartBtn.addEventListener("click", () => {
