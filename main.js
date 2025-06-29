@@ -184,6 +184,7 @@ function endGame(won) {
   });
 
   // 💥 bomba animáció
+if (!won) {
   const fullBomb = document.getElementById("full-bomb");
   if (fullBomb) {
     fullBomb.classList.remove("hidden");
