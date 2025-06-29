@@ -156,7 +156,6 @@ restartBtn.addEventListener("click", () => {
   if (fullBomb) {
     fullBomb.classList.add("hidden");
     fullBomb.style.display = "none";
-});
 
 document.getElementById("easy").addEventListener("click", () => startGame("easy"));
 document.getElementById("medium").addEventListener("click", () => startGame("medium"));
