@@ -216,4 +216,15 @@ document.getElementById("glitchkitti").addEventListener("click", () => startGame
 window.addEventListener('load', () => {
   document.body.classList.add('sugarcute');
 });
+// ⬇️ EZT ILLESZD BE A main.js FÁJL ALJÁRA ⬇️
+document.addEventListener('DOMContentLoaded', () => {
+  const menuItens = ['sugarcute', 'easy', 'medium', 'hard', 'glitchkitti'];
+  menuItens.forEach(id => {
+    const btn = document.getElementById(id);
+    if (!btn) {
+      console.error(`❌ Nem található a ${id} gomb!`);
+    } else {
+      btn.addEventListener('click', () => startGame(id === 'glitchkitti' ? 'glitch' : id));
+    }
+  });
 
