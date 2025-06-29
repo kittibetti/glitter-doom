@@ -16,25 +16,53 @@ body {
 }
 
 #main-title {
-  font-family: 'Creepster', cursive;
+  font-family: 'Creepster', 'Rubik Glitch', cursive;
   font-size: 4rem;
-  color: #ff1e56;
-  text-shadow: 2px 2px 0 #000, 0 0 20px #ff5ec4;
-  position: relative;
-  animation: flickerRed 1.6s infinite, titleShake 0.8s infinite;
+  color: #ff2ebd;
+  text-shadow:
+    2px 2px 0 #000000,
+    0 0 10px #ff99e6,
+    0 0 20px #ff007f,
+    1px -1px 2px #ff66cc;
+
+  animation:
+    cartoonyBounce 2s infinite ease-in-out,
+    glitterGlitch 1.5s infinite,
+    hueRotate 5s infinite linear;
 }
 
-@keyframes flickerRed {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.85; }
+@keyframes cartoonyBounce {
+  0%, 100% { transform: scale(1) rotate(0); }
+  30% { transform: scale(1.1) rotate(-2deg); }
+  60% { transform: scale(0.98) rotate(1deg); }
 }
 
-@keyframes titleShake {
-  0% { transform: translateX(0); }
-  25% { transform: translateX(-2px); }
-  50% { transform: translateX(2px); }
-  75% { transform: translateX(-1px); }
-  100% { transform: translateX(0); }
+@keyframes glitterGlitch {
+  0% {
+    text-shadow: 2px 2px 0 #000000, 0 0 10px #ff99e6;
+    transform: translate(0, 0);
+  }
+  25% {
+    text-shadow: -2px 0 #000, 0 0 20px #ff007f;
+    transform: translate(1px, -1px) skewX(-1deg);
+  }
+  50% {
+    text-shadow: 2px 2px #000, 0 0 15px #ff66cc;
+    transform: translate(-1px, 2px) skewY(1deg);
+  }
+  75% {
+    text-shadow: 1px 1px #000, 0 0 5px #ff33aa;
+    transform: translate(1px, 1px) skewX(2deg);
+  }
+  100% {
+    text-shadow: 2px 2px 0 #000000, 0 0 10px #ff99e6;
+    transform: translate(0, 0);
+  }
+}
+
+@keyframes hueRotate {
+  0% { filter: hue-rotate(0deg); }
+  100% { filter: hue-rotate(360deg); }
 }
   
 /* 🏳️‍🌈 Pride felirat */
