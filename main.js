@@ -151,6 +151,11 @@ restartBtn.addEventListener("click", () => {
   resultOverlay.classList.remove("show");
   menuEl.classList.remove("hidden");
   boardEl.classList.add("hidden");
+
+  const fullBomb = document.getElementById("full-bomb");
+  if (fullBomb) {
+    fullBomb.classList.add("hidden");
+    fullBomb.style.display = "none";
 });
 
 document.getElementById("easy").addEventListener("click", () => startGame("easy"));
