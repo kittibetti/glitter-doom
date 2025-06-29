@@ -197,7 +197,7 @@ if (!won) {
   }
 }
 
-// Újrajáték
+// 🔁 Újrajáték gomb eseménykezelője
 restartBtn.addEventListener("click", () => {
   resultOverlay.classList.add("hidden");
   resultOverlay.classList.remove("show");
@@ -211,7 +211,7 @@ restartBtn.addEventListener("click", () => {
   }
 });
 
-// Menügombok kattintáskezelői
+// 🧩 Menügombok kattintáskezelői
 document.addEventListener('DOMContentLoaded', () => {
   const menuItems = ['sugarcute', 'easy', 'medium', 'hard', 'glitchkitti'];
   menuItems.forEach(id => {
@@ -224,7 +224,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 
-// Automatikusan Sugarcute stílus betöltése a háttérhez
+// 🍭 Automatikusan Sugarcute stílus betöltése
 window.addEventListener('load', () => {
   document.body.classList.add('sugarcute');
 });
