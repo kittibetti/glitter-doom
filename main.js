@@ -209,3 +209,9 @@ document.getElementById("easy").addEventListener("click", () => startGame("easy"
 document.getElementById("medium").addEventListener("click", () => startGame("medium"));
 document.getElementById("hard").addEventListener("click", () => startGame("hard"));
 document.getElementById("glitchkitti").addEventListener("click", () => startGame("glitch"));
+
+// Amikor az oldal betöltődik, aktiváljuk a sugarcute módot
+window.addEventListener('load', () => {
+  document.body.classList.add('sugarcute');
+});
+
