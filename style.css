@@ -16,40 +16,26 @@ body {
 }
 
 #main-title {
-  font-family: 'Press Start 2P', monospace;
-  font-size: 2rem;
-  color: #ff0066;
-  text-shadow: 1px 1px #000, 0 0 8px #ff33aa;
-  animation: glitchText 1s infinite;
-  text-transform: uppercase;
-  letter-spacing: 2px;
+  font-family: 'Creepster', cursive;
+  font-size: 4rem;
+  color: #ff1e56;
+  text-shadow: 2px 2px 0 #000, 0 0 20px #ff5ec4;
+  position: relative;
+  animation: flickerRed 1.6s infinite, titleShake 0.8s infinite;
 }
 
-@keyframes glitchText {
-  0% {
-    text-shadow: 2px 2px #000, -2px -2px #ff0066;
-    transform: translate(0, 0);
-  }
-  20% {
-    text-shadow: -2px 0 #000, 2px 0 #ff0066;
-    transform: translate(2px, -1px);
-  }
-  40% {
-    text-shadow: 2px -2px #000, -2px 2px #ff0066;
-    transform: translate(-2px, 1px);
-  }
-  60% {
-    text-shadow: 1px 1px #000, -1px -1px #ff0066;
-    transform: translate(1px, -2px);
-  }
-  80% {
-    text-shadow: -1px -1px #000, 1px 1px #ff0066;
-    transform: translate(-1px, 2px);
-  }
-  100% {
-    text-shadow: 2px 2px #000, -2px -2px #ff0066;
-    transform: translate(0, 0);
-  }
+@keyframes flickerRed {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.85; }
+}
+
+@keyframes titleShake {
+  0% { transform: translateX(0); }
+  25% { transform: translateX(-2px); }
+  50% { transform: translateX(2px); }
+  75% { transform: translateX(-1px); }
+  100% { transform: translateX(0); }
+}
   
 /* 🏳️‍🌈 Pride felirat */
 .pride-banner {
