@@ -130,8 +130,9 @@ function endGame(won) {
     resultText.className = "looser-text";
     resultSubtext.textContent = "Glitter Kitty has claimed your soul";
 
-    const fullBomb = document.getElementById("full-bomb");
-    fullBomb.style.display = "block";
+const fullBomb = document.getElementById("full-bomb");
+if (fullBomb) {
+  fullBomb.style.display = "block";
   }
 
   // 💣 Megmutatjuk az összes bombát
