@@ -145,29 +145,50 @@ function endGame(won) {
   resultOverlay.classList.add("show");
 
   if (won) {
-    resultText.textContent = (boardSize === 6 && bombCount === 2) ? "🎀 YOU'RE ADORABLE 🎀" : "🎉 WINNER 🎉";
-    resultText.className = "winner-text";
-    resultSubtext.textContent = (boardSize === 6 && bombCount === 2)
-      ? "You mastered the SugarCute™ world!"
-      : "You survived the glitter apocalypse!";
+    if (boardSize === 6 && bombCount === 2) {
+      resultText.textContent = "🎀 YOU'RE ADORABLE 🎀";
+      resultText.className = "winner-text";
+      resultSubtext.textContent = "You mastered the SugarCute™ world!";
+    } else {
+      resultText.textContent = "🎉 WINNER 🎉";
+      resultText.className = "winner-text";
+      resultSubtext.textContent = "You survived the glitter apocalypse!";
+    }
   } else {
-    resultText.textContent = (boardSize === 6 && bombCount === 2) ? "😿 OOPSIE! 😿" : "💀 LOOSER 💀";
-    resultText.className = "looser-text";
-    resultSubtext.textContent = (boardSize === 6 && bombCount === 2)
-      ? "Even the cutest worlds have traps!"
-      : "Glitter Kitty has claimed your soul";
+    if (boardSize === 6 && bombCount === 2) {
+      resultText.textContent = "😿 OOPSIE! 😿";
+      resultText.className = "looser-text";
+      resultSubtext.textContent = "Even the cutest worlds have traps!";
+    } else {
+      resultText.textContent = "💀 LOOSER 💀";
+      resultText.className = "looser-text";
+      resultSubtext.textContent = "Glitter Kitty has claimed your soul";
+    }
   }
 
-  cells.forEach(cell => {
-    if (cell.dataset.bomb === "true") {
-      cell.classList.add("bomb");
+  // 💣 és 📟 felfedjük az összes mezőt
+  cells.forEach((cell, i) => {
+    if (!cell.classList.contains("revealed")) {
+      cell.classList.add("revealed");
+
+      if (cell.dataset.bomb === "true") {
+        cell.classList.add("bomb");
+      } else {
+        const count = countAdjacentBombs(i);
+        if (count > 0) {
+          cell.textContent = count;
+          cell.classList.add("number");
+        }
+      }
     }
   });
 
+  // 💥 bomba animáció
   const fullBomb = document.getElementById("full-bomb");
   if (fullBomb) {
     fullBomb.classList.remove("hidden");
     fullBomb.style.display = "block";
+
     setTimeout(() => {
       fullBomb.classList.add("hidden");
       fullBomb.style.display = "none";
