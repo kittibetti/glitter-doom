@@ -133,7 +133,7 @@ function endGame(won) {
 
    const fullBomb = document.getElementById("full-bomb");
   fullBomb.style.display = "block";
- }  
+
   // 💣 Itt mutatjuk meg az összes bombát
   cells.forEach(cell => {
     if (cell.dataset.bomb === "true") {
