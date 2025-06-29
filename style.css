@@ -9,14 +9,6 @@ body {
   color: #300;
 }
 
-/* Sugarcute mód cuki, pasztell, lágyabb háttér */
-body.sugarcute {
-  background: linear-gradient(135deg, #ffb6c1, #ffe4e1, #fffacd, #e0ffff, #dda0dd);
-  background-size: 600% 600%;
-  animation: gradientFlow 20s ease infinite;
-  color: #a05070; /* Lágyabb, cukibb szín a szövegnek */
-}
-
 @keyframes gradientFlow {
   0% { background-position: 0% 50%; }
   50% { background-position: 100% 50%; }
@@ -219,4 +211,22 @@ button:hover {
   0% { opacity: 0; transform: scale(1.2); }
   30% { opacity: 1; transform: scale(1); }
   100% { opacity: 0; transform: scale(0.9); }
+}
+/* Csak a mezők háttérszíne változzon cukibbra sugarcute módban */
+body.sugarcute .cell {
+  background-color: #fff0f5;  /* halvány, pasztell rózsaszín */
+  border-color: #ffb6c1;
+  box-shadow: 0 0 8px #ff69b4 inset;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Cuki hover effekt sugarcute módban */
+body.sugarcute .cell:hover {
+  background-color: #ffc0cb;
+  box-shadow: 0 0 12px #ff1493 inset;
+}
+
+/* Font szín sugarcute módban (opcionális, ha kell) */
+body.sugarcute {
+  color: #a05070; /* Lágyabb, cukibb szín a szövegnek */
 }
