@@ -80,19 +80,18 @@ function revealCell(index) {
     } else {
       revealAdjacentSafeCells(index);
     }
+    checkWinCondition();  // Csak itt kell meghívni, ha nem bomba
   }
-  checkWinCondition();
-  function checkWinCondition() {
-  // Ha már vége a játéknak, nem kell tovább ellenőrizni
+}
+
+function checkWinCondition() {
   if (gameOver) return;
 
-  // Megszámoljuk, hány cella van felfedve
   const revealedCount = cells.filter(cell => cell.classList.contains("revealed")).length;
   const totalCells = boardSize * boardSize;
   const safeCells = totalCells - bombCount;
 
   if (revealedCount === safeCells) {
-    // Minden nem bomba felfedve – nyert a játékos
     endGame(true);
   }
 }
