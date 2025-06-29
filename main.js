@@ -143,7 +143,7 @@ function endGame(won) {
       setTimeout(() => {
         fullBomb.classList.add("hidden");
         fullBomb.style.display = "none";
-      }, 2000);
+      }, 2500);
     }
   }
 
