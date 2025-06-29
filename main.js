@@ -118,6 +118,7 @@ function revealAdjacentSafeCells(index) {
 
 function endGame(won) {
   gameOver = true;
+
   resultOverlay.classList.remove("hidden");
   resultOverlay.classList.add("show");
 
@@ -129,9 +130,15 @@ function endGame(won) {
     resultText.textContent = "💀 LOOSER 💀";
     resultText.className = "looser-text";
     resultSubtext.textContent = "Glitter Kitty has claimed your soul";
-    if (fullBomb) fullBomb.style.display = "block";
+
+    const fullBomb = document.getElementById("full-bomb");
+    if (fullBomb) {
+      fullBomb.classList.remove("hidden"); // ez a fontos!
+      fullBomb.style.display = "block";
+    }
   }
 
+  // 💣 Összes bomba felfedése
   cells.forEach(cell => {
     if (cell.dataset.bomb === "true") {
       cell.classList.add("bomb");
