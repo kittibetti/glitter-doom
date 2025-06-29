@@ -8,7 +8,6 @@ const resultOverlay = document.getElementById("result-overlay");
 const resultText = document.getElementById("result-text");
 const resultSubtext = document.getElementById("result-subtext");
 const restartBtn = document.getElementById("restart-button");
-const fullBomb = document.getElementById("full-bomb");
 
 let boardSize = 0;
 let bombCount = 0;
@@ -19,13 +18,19 @@ const difficulties = {
   easy: { size: 8, bombs: 10 },
   medium: { size: 12, bombs: 24 },
   hard: { size: 16, bombs: 40 },
-  glitch: { size: 20, bombs: 80 },
+  glitch: { size: 20, bombs: 80 }
 };
 
 function startGame(difficulty) {
   const config = difficulties[difficulty] || difficulties.easy;
   boardSize = config.size;
   bombCount = config.bombs;
+
+  const fullBomb = document.getElementById("full-bomb");
+  if (fullBomb) {
+    fullBomb.classList.add("hidden");
+    fullBomb.style.display = "none";
+  }
 
   document.documentElement.style.setProperty('--board-size', boardSize);
   menuEl.classList.add("hidden");
@@ -34,7 +39,6 @@ function startGame(difficulty) {
   resultOverlay.classList.remove("show");
   resultText.textContent = "";
   resultSubtext.textContent = "";
-  if (fullBomb) fullBomb.style.display = "none";
 
   cells = [];
   gameOver = false;
@@ -133,12 +137,17 @@ function endGame(won) {
 
     const fullBomb = document.getElementById("full-bomb");
     if (fullBomb) {
-      fullBomb.classList.remove("hidden"); // ez a fontos!
+      fullBomb.classList.remove("hidden");
       fullBomb.style.display = "block";
+
+      setTimeout(() => {
+        fullBomb.classList.add("hidden");
+        fullBomb.style.display = "none";
+      }, 2000);
     }
   }
 
-  // 💣 Összes bomba felfedése
+  // 💣 mutatjuk az összes bombát
   cells.forEach(cell => {
     if (cell.dataset.bomb === "true") {
       cell.classList.add("bomb");
@@ -156,6 +165,8 @@ restartBtn.addEventListener("click", () => {
   if (fullBomb) {
     fullBomb.classList.add("hidden");
     fullBomb.style.display = "none";
+  }
+});
 
 document.getElementById("easy").addEventListener("click", () => startGame("easy"));
 document.getElementById("medium").addEventListener("click", () => startGame("medium"));
