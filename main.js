@@ -166,7 +166,7 @@ function endGame(won) {
     }
   }
 
-  // 💣 és 📟 felfedjük az összes mezőt
+  // 💣 Felfedjük az összes mezőt
   cells.forEach((cell, i) => {
     if (!cell.classList.contains("revealed")) {
       cell.classList.add("revealed");
@@ -183,20 +183,20 @@ function endGame(won) {
     }
   });
 
-  // 💥 bomba animáció
-if (!won) {
-  const fullBomb = document.getElementById("full-bomb");
-  if (fullBomb) {
-    fullBomb.classList.remove("hidden");
-    fullBomb.style.display = "block";
+  // 💥 Bomba animáció
+  if (!won) {
+    const fullBomb = document.getElementById("full-bomb");
+    if (fullBomb) {
+      fullBomb.classList.remove("hidden");
+      fullBomb.style.display = "block";
 
-    setTimeout(() => {
-      fullBomb.classList.add("hidden");
-      fullBomb.style.display = "none";
-    }, 2500);
+      setTimeout(() => {
+        fullBomb.classList.add("hidden");
+        fullBomb.style.display = "none";
+      }, 2500);
+    }
   }
 }
-} 
 
 // 🔁 Újrajáték gomb eseménykezelője
 restartBtn.addEventListener("click", () => {
@@ -229,4 +229,3 @@ document.addEventListener('DOMContentLoaded', () => {
 window.addEventListener('load', () => {
   document.body.classList.add('sugarcute');
 });
-
